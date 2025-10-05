@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
+  <reporter-output>
+  </reporter-output>
+  <suite started-at="2025-10-01T16:04:46 IST" name="Default suite" finished-at="2025-10-01T16:05:56 IST" duration-ms="69762">
+    <groups>
+    </groups>
+    <test started-at="2025-10-01T16:04:46 IST" name="Default test" finished-at="2025-10-01T16:05:56 IST" duration-ms="69762">
+      <class name="AutomatedScriptOfJaleh01AsPOM.TC_RefreshMenuONList">
+        <test-method is-config="true" signature="setup()[pri:0, instance:AutomatedScriptOfJaleh01AsPOM.TC_RefreshMenuONList@ae13544]" started-at="2025-10-01T16:04:47 IST" name="setup" finished-at="2025-10-01T16:04:49 IST" duration-ms="2085" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setup -->
+        <test-method signature="Test_RefreshMenuONList(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)[pri:0, instance:AutomatedScriptOfJaleh01AsPOM.TC_RefreshMenuONList@ae13544]" started-at="2025-10-01T16:04:49 IST" name="Test_RefreshMenuONList" data-provider="recipeDataProvider" finished-at="2025-10-01T16:05:56 IST" duration-ms="67002" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[admin-path15@compass-external.com.au]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[Path@03072024512]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[Rec98TY]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[newtemp]]>
+              </value>
+            </param>
+            <param index="4">
+              <value>
+                <![CDATA[Production | 180800-AFP Majura | 31-Retail 1(Real)]]>
+              </value>
+            </param>
+            <param index="5">
+              <value>
+                <![CDATA[TemplateType]]>
+              </value>
+            </param>
+            <param index="6">
+              <value>
+                <![CDATA[Day Menu]]>
+              </value>
+            </param>
+            <param index="7">
+              <value>
+                <![CDATA[10/1/25]]>
+              </value>
+            </param>
+            <param index="8">
+              <value>
+                <![CDATA[10/9/25]]>
+              </value>
+            </param>
+            <param index="9">
+              <value>
+                <![CDATA[Production | 208150-South32 - Groote Eylandt | 11-Catering(Real)]]>
+              </value>
+            </param>
+            <param index="10">
+              <value>
+                <![CDATA[With Price]]>
+              </value>
+            </param>
+            <param index="11">
+              <value>
+                <![CDATA[11.0]]>
+              </value>
+            </param>
+            <param index="12">
+              <value>
+                <![CDATA[10/2/25]]>
+              </value>
+            </param>
+            <param index="13">
+              <value>
+                <![CDATA[10/5/25]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- Test_RefreshMenuONList -->
+      </class> <!-- AutomatedScriptOfJaleh01AsPOM.TC_RefreshMenuONList -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
+</testng-results>
