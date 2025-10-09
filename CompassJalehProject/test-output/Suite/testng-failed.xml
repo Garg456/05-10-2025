@@ -3,12 +3,20 @@
 <suite name="Failed suite [Suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Creation(failed)">
     <classes>
-      <class name="AutomatedScriptOfJaleh01AsPOM.TC_CreateTemplateMenu">
+      <class name="AutomatedScriptOfJaleh01AsPOM.TC_DownloadAllRecipe">
         <methods>
-          <include name="Test_TemplateMenu" invocation-numbers="0"/>
+          <include name="Test_TemplateMenu"/>
           <include name="setup"/>
+          <include name="tearDown"/>
         </methods>
-      </class> <!-- AutomatedScriptOfJaleh01AsPOM.TC_CreateTemplateMenu -->
+      </class> <!-- AutomatedScriptOfJaleh01AsPOM.TC_DownloadAllRecipe -->
+      <class name="AutomatedScriptOfJaleh01AsPOM.TC_CreateRecipe">
+        <methods>
+          <include name="Test_createRecipe" invocation-numbers="0"/>
+          <include name="setup"/>
+          <include name="tearDown"/>
+        </methods>
+      </class> <!-- AutomatedScriptOfJaleh01AsPOM.TC_CreateRecipe -->
     </classes>
   </test> <!-- Creation(failed) -->
 </suite> <!-- Failed suite [Suite] -->

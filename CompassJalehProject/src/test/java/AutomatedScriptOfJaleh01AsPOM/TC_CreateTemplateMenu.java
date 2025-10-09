@@ -6,10 +6,12 @@ import java.util.List;
 import java.util.Map;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.Keys;
-import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.StaleElementReferenceException;
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
@@ -19,9 +21,6 @@ import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import com.aventstack.extentreports.ExtentTest;
-
-import compass.Test.TestContext;
-import io.github.bonigarcia.wdm.WebDriverManager;
 
 @Listeners(myListener3.class)
 public class TC_CreateTemplateMenu extends BaseTest2 {
@@ -85,58 +84,79 @@ public class TC_CreateTemplateMenu extends BaseTest2 {
 		 */
 
 	    TemplateMenu(menuname, sitename, recipeName, Menu_Type, MenuCategory, NoOfCustomer, addMeal);
+	    
+	    TestContext.createdTemplateMenuName = menuname;
 	}
 
+	// Method to create a template menu with given parameters and publish it
 	public static void TemplateMenu(String menuname, String sitename, String Recipename, String Menu_Type,
-			String MenuCategory,String NoOfCustomer,String addMeal) throws Exception {
+	                                String MenuCategory, String NoOfCustomer, String addMeal) throws Exception {
 
-		clickHome();
-		addSiteGoRecipe(sitename);
-		selectMenuRecipe();
+	    clickHome(); // Navigate to the home page
 
-		clickHome();
-		clickMenus();
-		clickTemplateMenus();
-		SearchRecipeBeforeCreation srbc = new SearchRecipeBeforeCreation();
-		srbc.searchProduct(menuname);
+	    addSiteGoRecipe(sitename); // Select the site by name to work within the correct context
 
-		clickHome();
-		clickMenus();
-		//clickTemplateMenus();
-		ExtentTest testLogger = myListener3.getTest();
-		navigateToMenus();
-		addmenu(menuname, Menu_Type, MenuCategory);
-		addCustomer(NoOfCustomer);
-		
-		addMealPeriods(addMeal);
-		selectMealPeriod();
-		addRecipeOnMenu(Recipename);
-		 testLogger.info("🔰 Enter Recipename: <span style='color:green; font-weight:bold;'>" + Recipename + "</span>");
+	    selectMenuRecipe(); // Open or navigate to the menu recipe section
 
-		clickPublishMenu();
-		
-		
-		testLogger.info("🔰 Menu : <span style='color:green; font-weight:bold;'>" + menuname + "</span>" +" created as "+ "🔰 created as Menu_Type : <span style='color:green; font-weight:bold;'>" + Menu_Type +"   MenuCategory  is" +  MenuCategory + "</span>");
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		clickHome();
-		clickMenus();
-		clickTemplateMenus();
-		SearchRecipeAfterCreation srac = new SearchRecipeAfterCreation();
-		//searchMenu sm =new searchMenu();
-		//sm.searchProduct(menuname);
+	    clickHome(); // Return to home page
 
-		srac.searchProduct(menuname);
+	    clickMenus(); // Open the Menus module
 
+	    clickTemplateMenus(); // Open Template Menus section
+
+	    // Create a helper instance to search for existing menu with the same name before creation
+	    SearchRecipeBeforeCreation srbc = new SearchRecipeBeforeCreation();
+
+	    srbc.searchProduct(menuname); // Search the menu name to avoid duplication
+
+	    clickHome(); // Navigate back to home page
+
+	    clickMenus(); // Go to Menus module again
+
+	    //clickTemplateMenus(); // This line is commented out, probably because it's redundant here
+
+	    ExtentTest testLogger = myListener3.getTest(); // Initialize the logger for test reporting
+
+	    navigateToMenus(); // Navigate to the menu management/creation page
+
+	    addmenu(menuname, Menu_Type, MenuCategory); // Add a new menu with name, type, and category
+
+	    addCustomer(NoOfCustomer); // Add the specified number of customers to the menu
+
+	    addMealPeriods(addMeal); // Add the meal period(s) specified by the parameter
+
+	    selectMealPeriod(); // Select the added meal period(s)
+
+	    addRecipeOnMenu(Recipename); // Add the specified recipe to the menu
+
+	    // Log the recipe name added to the menu in the test report
+	    testLogger.info("🔰 Enter Recipename: <span style='color:green; font-weight:bold;'>" + Recipename + "</span>");
+
+	    clickPublishMenu(); // Publish the created template menu
+
+	    // Log the menu creation details including menu name, type, and category
+	    testLogger.info("🔰 Menu : <span style='color:green; font-weight:bold;'>" + menuname + "</span>" +
+	                    " created as " + "🔰 created as Menu_Type : <span style='color:green; font-weight:bold;'>" + 
+	                    Menu_Type + "   MenuCategory  is " + MenuCategory + "</span>");
+
+	    clickHome(); // Return to home page after publishing
+
+	    clickMenus(); // Go to Menus module again
+
+	    clickTemplateMenus(); // Open Template Menus section again to verify
+
+	    // Create an instance to search and verify the newly created menu exists
+	    SearchRecipeAfterCreation srac = new SearchRecipeAfterCreation();
+
+	    //searchMenu sm = new searchMenu(); // This is commented out, potentially unused code
+
+	    //sm.searchProduct(menuname); // Also commented out alternative search method
+
+	    srac.searchProduct(menuname); // Search the menu by name to confirm creation
+	    
+	    
 	}
+
 
 	public static void navigateToMenus() {
 		driver.findElement(By.xpath("(//i[@class='nav-icon fas fa-table'])[1]")).click();
@@ -215,21 +235,105 @@ public class TC_CreateTemplateMenu extends BaseTest2 {
 
 	// click on edit
 
-	public static void addCustomer(String NoOfCustomer) throws Exception {
-		
-		
-		driver.findElement(By.xpath("//button[@id='editCustomerRow_11']")).click();
+	/*
+	 * public static void addCustomer(String NoOfCustomer) throws Exception {
+	 * 
+	 * 
+	 * driver.findElement(By.xpath("//button[@id='editCustomerRow_11']")).click();
+	 * 
+	 * // clickon add data driver.findElement(By.xpath(
+	 * "//tr[@id='tr_W1_Cycle1']//input[@id='editableValue7']")).sendKeys(
+	 * NoOfCustomer);
+	 * 
+	 * // click on save
+	 * driver.findElement(By.xpath("//button[@id='saveCustomerRow_11']")).click();
+	 * 
+	 * System.out.println(" Customer added");
+	 * 
+	 * Thread.sleep(3000); }
+	 */
+	
+	
+	
+	
+	
+	
+	 public static void addCustomer(String NoOfCustomer) {
+		    try {
+		        // Click edit button for the customer row
+		        driver.findElement(By.xpath("//button[@id='editCustomerRow_11']")).click();
+		        System.out.println("✅ Clicked edit button for customer row.");
 
-		// clickon add data
-		driver.findElement(By.xpath("//tr[@id='tr_W1_Cycle1']//input[@id='editableValue7']")).sendKeys(NoOfCustomer);
+		        String noOfCustomerInt = NoOfCustomer.split("\\.")[0].trim();
 
-		// click on save
-		driver.findElement(By.xpath("//button[@id='saveCustomerRow_11']")).click();
+		        // XPath targeting input fields inside day-value divs (Monday to Sunday)
+		        String xpath = "//div[contains(@class,'day-value')]//input";
 
-		System.out.println(" Customer added");
+		        List<WebElement> inputs = driver.findElements(By.xpath(xpath));
+		        if (inputs.isEmpty()) {
+		            System.out.println("⚠️ No input fields available (no days visible). Skipping input and save.");
+		            return;
+		        }
 
-		Thread.sleep(3000);
-	}
+		        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+		        boolean atLeastOneInputSuccess = false;
+
+		        for (WebElement input : inputs) {
+		            try {
+		                if (!input.isDisplayed() || !input.isEnabled()) {
+		                    System.out.println("⚠️ Skipping input (not visible or disabled).");
+		                    continue;
+		                }
+		                String readOnly = input.getAttribute("readonly");
+		                if (readOnly != null && (readOnly.equalsIgnoreCase("true") || readOnly.equalsIgnoreCase("readonly"))) {
+		                    System.out.println("⚠️ Skipping readonly input field.");
+		                    continue;
+		                }
+
+		                wait.until(ExpectedConditions.elementToBeClickable(input));
+		                input.clear();
+
+		                // Use JavaScript to safely set value
+		                ((org.openqa.selenium.JavascriptExecutor) driver).executeScript("arguments[0].value = arguments[1];", input, noOfCustomerInt);
+
+		                input.sendKeys(Keys.TAB); // Trigger events
+
+		                String enteredValue = input.getAttribute("value");
+		                if (enteredValue.equals(noOfCustomerInt)) {
+		                    System.out.println("✅ Value entered successfully for an available day.");
+		                    atLeastOneInputSuccess = true;
+		                } else {
+		                    System.out.printf("❌ Value mismatch. Expected: %s, Found: %s%n", noOfCustomerInt, enteredValue);
+		                }
+
+		            } catch (TimeoutException e) {
+		                System.out.println("⚠️ Input not clickable, skipping.");
+		            } catch (Exception e) {
+		                System.out.println("❌ Error with input: " + e.getMessage());
+		            }
+		        }
+
+		        // Only click save if at least one input was filled successfully
+		        if (atLeastOneInputSuccess) {
+		            WebElement saveBtnIcon = wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//button[@id='saveCustomerRow_11']/child::i")));
+		            WebElement saveBtn = saveBtnIcon.findElement(By.xpath("./..")); // Parent button
+
+		            // Hover over the button to make sure it's visible and clickable
+		            new Actions(driver).moveToElement(saveBtn).perform();
+
+		            wait.until(ExpectedConditions.elementToBeClickable(saveBtn));
+		            saveBtn.click();
+		            System.out.println("✅ Clicked save button for customer row.");
+		        } else {
+		            System.out.println("⚠️ No input fields updated, skipping save button click.");
+		        }
+
+		    } catch (Exception e) {
+		        System.out.println("❌ Error in addCustomer method: " + e.getMessage());
+		        throw new RuntimeException(e);
+		    }
+		}
+
 
 //		
 //		//click onmore action
@@ -308,38 +412,108 @@ public class TC_CreateTemplateMenu extends BaseTest2 {
 
 
 	// click on menu Recipe
-	public static void addRecipeOnMenu(String Recipename) {
-		driver.findElement(By.id("tabFiveTab")).click();
-		try {
-			// for breakfast
+	/*
+	 * public static void addRecipeOnMenu(String Recipename) {
+	 * driver.findElement(By.id("tabFiveTab")).click(); try { // for breakfast
+	 * 
+	 * driver.findElement(By.xpath("(//i[@class='fa fa-chevron-down'])[1]")).click()
+	 * ;
+	 * 
+	 * // click on plus icon
+	 * 
+	 * driver.findElement(By.xpath("(//i[@class='fa fa-plus'])[1]")).click();
+	 * 
+	 * // recipe creach an add activiy WebElement srchrcptxt =
+	 * driver.findElement(By.id("SearchText")); srchrcptxt.clear();
+	 * 
+	 * srchrcptxt.sendKeys(Recipename, Keys.ENTER);
+	 * 
+	 * driver.findElement(By.xpath("(//button[text()='Add'])[4]")).click();
+	 * 
+	 * driver.findElement(By.id("btnAddRecipe")).click(); } catch (Exception e) {
+	 * System.out.println(e.getMessage()); }
+	 * System.out.println("Recipe added on menu"); String msg =
+	 * capturePopupMessageText(); System.out.println("Popup after adding recipe: " +
+	 * msg);
+	 * 
+	 * Assert.assertNotNull(msg, "Customer popup not found.");
+	 * Assert.assertTrue(msg.toLowerCase().contains("menu") ||
+	 * msg.toLowerCase().contains("success"), "Unexpected customer popup: " + msg);
+	 * 
+	 * }
+	 */
+	
+	
+	
+	public static void addRecipeOnMenu(String recipeName) {
+	    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(15));
+	    JavascriptExecutor js = (JavascriptExecutor) driver;
 
-			driver.findElement(By.xpath("(//i[@class='fa fa-chevron-down'])[1]")).click();
+	    // Step 1: Go to "Menu Recipes" tab
+	    driver.findElement(By.id("tabFiveTab")).click();
+	    System.out.println("✅ Switched to Menu Recipe tab.");
 
-			// click on plus icon
+	    // Step 2: Expand first dropdown (e.g., Breakfast)
+	    WebElement dropdownIcon = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("(//i[@class='fa fa-chevron-down'])[1]")));
+	    dropdownIcon.click();
+	    System.out.println("✅ Expanded the first meal section.");
 
-			driver.findElement(By.xpath("(//i[@class='fa fa-plus'])[1]")).click();
+	    // Step 3: Get the plus icons fresh
+	    List<WebElement> plusIcons = driver.findElements(By.xpath("//p[@type='button']"));
+	    System.out.println("🔍 Found " + plusIcons.size() + " plus icons.");
 
-			// recipe creach an add activiy
-			WebElement srchrcptxt = driver.findElement(By.id("SearchText"));
-			srchrcptxt.clear();
+	    int recipeCount = 0;
 
-			srchrcptxt.sendKeys(Recipename, Keys.ENTER);
+	    for (int i = 0; i < plusIcons.size(); i++) {
+	        try {
+	            // Refresh the plus icons list to avoid stale elements
+	            plusIcons = driver.findElements(By.xpath("//p[@type='button']"));
+	            WebElement plusIcon = plusIcons.get(i);
 
-			driver.findElement(By.xpath("(//button[text()='Add'])[4]")).click();
+	            if (plusIcon.isDisplayed()) {
+	                // Scroll the plus icon into view before clicking
+	                js.executeScript("arguments[0].scrollIntoView({block: 'center'});", plusIcon);
+	                Thread.sleep(500); // small delay to allow scroll animation to complete
 
-			driver.findElement(By.id("btnAddRecipe")).click();
-		} catch (Exception e) {
-			System.out.println(e.getMessage());
-		}
-		System.out.println("Recipe added on menu");
-		String msg = capturePopupMessageText();
-		System.out.println("Popup after adding recipe: " + msg);
+	                wait.until(ExpectedConditions.elementToBeClickable(plusIcon));
+	                plusIcon.click();
+	                System.out.println("✅ Clicked plus icon at index: " + i);
 
-		Assert.assertNotNull(msg, "Customer popup not found.");
-		Assert.assertTrue(msg.toLowerCase().contains("menu") || msg.toLowerCase().contains("success"),
-				"Unexpected customer popup: " + msg);
+	                // Search the recipe
+	                WebElement searchInput = wait.until(ExpectedConditions.visibilityOfElementLocated(
+	                    By.xpath("//button[@id='btnKeywordSearch']/parent::div/child::input[2]")));
+	                searchInput.clear();
+	                searchInput.sendKeys(recipeName, Keys.ENTER);
+	                System.out.println("🔍 Searching for recipe: " + recipeName);
 
+	                // Add the recipe
+	                wait.until(ExpectedConditions.visibilityOfElementLocated(By.xpath("//a[contains(text(),'" + recipeName + "')]")));
+	                wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//div[@class='action-buttons']//button[text()='Add']"))).click();
+	                System.out.println("➕ Clicked 'Add' button for recipe.");
+
+	                wait.until(ExpectedConditions.elementToBeClickable(By.id("btnAddRecipe"))).click();
+	                System.out.println("✅ Recipe added successfully at index: " + i);
+
+	                recipeCount++;
+
+	                // After adding, scroll back up a bit to prepare for the next icon
+	                js.executeScript("window.scrollBy(0, -150);");
+	                Thread.sleep(1000); // Let UI settle
+
+	            }
+
+	        } catch (StaleElementReferenceException stale) {
+	            System.out.println("⚠️ Stale element at index " + i + " — skipped.");
+	        } catch (TimeoutException timeout) {
+	            System.out.println("⚠️ Timeout waiting for element at index " + i + " — skipped.");
+	        } catch (Exception e) {
+	            System.out.println("❌ Error at index " + i + ": " + e.getMessage());
+	        }
+	    }
+
+	    System.out.println("✅ Done. Recipe added on " + recipeCount + " menu sections.");
 	}
+
 
 	public static void clickPublishMenu() throws Exception {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));

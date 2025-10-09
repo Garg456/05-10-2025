@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results ignored="0" total="3" passed="3" failed="0" skipped="0">
+<testng-results ignored="0" total="1" passed="0" failed="1" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2025-10-08T16:37:13 IST" name="Suite" finished-at="2025-10-08T16:42:27 IST" duration-ms="314079">
+  <suite started-at="2025-10-09T18:29:09 IST" name="Default suite" finished-at="2025-10-09T18:30:18 IST" duration-ms="69397">
     <groups>
     </groups>
-    <test started-at="2025-10-08T16:37:13 IST" name="Creation" finished-at="2025-10-08T16:42:27 IST" duration-ms="314079">
+    <test started-at="2025-10-09T18:29:09 IST" name="Default test" finished-at="2025-10-09T18:30:18 IST" duration-ms="69397">
       <class name="AutomatedScriptOfJaleh01AsPOM.TC_CreateRecipe">
-        <test-method is-config="true" signature="setup()[pri:0, instance:AutomatedScriptOfJaleh01AsPOM.TC_CreateRecipe@bccb269]" started-at="2025-10-08T16:37:15 IST" name="setup" finished-at="2025-10-08T16:37:22 IST" duration-ms="7116" status="PASS">
+        <test-method is-config="true" signature="setup()[pri:0, instance:AutomatedScriptOfJaleh01AsPOM.TC_CreateRecipe@ae13544]" started-at="2025-10-09T18:29:10 IST" name="setup" finished-at="2025-10-09T18:29:12 IST" duration-ms="2246" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setup -->
-        <test-method signature="Test_createRecipe(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)[pri:0, instance:AutomatedScriptOfJaleh01AsPOM.TC_CreateRecipe@bccb269]" started-at="2025-10-08T16:37:22 IST" name="Test_createRecipe" data-provider="recipeDataProvider" finished-at="2025-10-08T16:38:46 IST" duration-ms="84615" status="PASS">
+        <test-method signature="Test_createRecipe(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)[pri:0, instance:AutomatedScriptOfJaleh01AsPOM.TC_CreateRecipe@ae13544]" started-at="2025-10-09T18:29:12 IST" name="Test_createRecipe" data-provider="recipeDataProvider" finished-at="2025-10-09T18:30:16 IST" duration-ms="64607" status="FAIL">
           <params>
             <param index="0">
               <value>
@@ -25,7 +25,7 @@
             </param>
             <param index="2">
               <value>
-                <![CDATA[newRecpe126]]>
+                <![CDATA[newRecpe134]]>
               </value>
             </param>
             <param index="3">
@@ -63,125 +63,68 @@
                 <![CDATA[Master]]>
               </value>
             </param>
+            <param index="10">
+              <value>
+                <![CDATA[Production | 180800-AFP Majura | 31-Retail 1(Real)]]>
+              </value>
+            </param>
           </params>
+          <exception class="java.lang.AssertionError">
+            <message>
+              <![CDATA[❌ Failed to select product description 'Long Life Full Cream Milk - Superior Foods Darwin NT - 85590': Expected condition failed: waiting for element to be clickable: By.xpath: //li[contains(@class,'select2-results__option')]//span[contains(text(),'Long Life Full Cream Milk - Superior Foods Darwin NT - 85590')] (tried for 10 second(s) with 500 milliseconds interval)
+Build info: version: '4.32.0', revision: 'd17c8aa950'
+System info: os.name: 'Windows 11', os.arch: 'amd64', os.version: '10.0', java.version: '21.0.6'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 140.0.7339.185, chrome: {chromedriverVersion: 140.0.7339.207 (17230b545fd..., userDataDir: C:\Users\PRADEE~1.GAR\AppDa...}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:50411}, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: windows, proxy: Proxy(), se:cdp: ws://localhost:50411/devtoo..., se:cdpVersion: 140.0.7339.185, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
+Session ID: 3d696ed92b8a3244c144a66a9220efaf]]>
+            </message>
+            <full-stacktrace>
+              <![CDATA[java.lang.AssertionError: ❌ Failed to select product description 'Long Life Full Cream Milk - Superior Foods Darwin NT - 85590': Expected condition failed: waiting for element to be clickable: By.xpath: //li[contains(@class,'select2-results__option')]//span[contains(text(),'Long Life Full Cream Milk - Superior Foods Darwin NT - 85590')] (tried for 10 second(s) with 500 milliseconds interval)
+Build info: version: '4.32.0', revision: 'd17c8aa950'
+System info: os.name: 'Windows 11', os.arch: 'amd64', os.version: '10.0', java.version: '21.0.6'
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 140.0.7339.185, chrome: {chromedriverVersion: 140.0.7339.207 (17230b545fd..., userDataDir: C:\Users\PRADEE~1.GAR\AppDa...}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:50411}, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: windows, proxy: Proxy(), se:cdp: ws://localhost:50411/devtoo..., se:cdpVersion: 140.0.7339.185, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
+Session ID: 3d696ed92b8a3244c144a66a9220efaf
+at AutomatedScriptOfJaleh01AsPOM.TC_CreateRecipe.selectProductDescription(TC_CreateRecipe.java:372)
+at AutomatedScriptOfJaleh01AsPOM.TC_CreateRecipe.createRecipe(TC_CreateRecipe.java:149)
+at AutomatedScriptOfJaleh01AsPOM.TC_CreateRecipe.Test_createRecipe(TC_CreateRecipe.java:76)
+at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+at org.testng.internal.invokers.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:141)
+at org.testng.internal.invokers.TestInvoker.invokeMethod(TestInvoker.java:687)
+at org.testng.internal.invokers.TestInvoker.invokeTestMethod(TestInvoker.java:230)
+at org.testng.internal.invokers.MethodRunner.runInSequence(MethodRunner.java:63)
+at org.testng.internal.invokers.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:995)
+at org.testng.internal.invokers.TestInvoker.invokeTestMethods(TestInvoker.java:203)
+at org.testng.internal.invokers.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:154)
+at org.testng.internal.invokers.TestMethodWorker.run(TestMethodWorker.java:134)
+at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+at org.testng.TestRunner.privateRun(TestRunner.java:741)
+at org.testng.TestRunner.run(TestRunner.java:616)
+at org.testng.SuiteRunner.runTest(SuiteRunner.java:421)
+at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:413)
+at org.testng.SuiteRunner.privateRun(SuiteRunner.java:373)
+at org.testng.SuiteRunner.run(SuiteRunner.java:312)
+at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:95)
+at org.testng.TestNG.runSuitesSequentially(TestNG.java:1274)
+at org.testng.TestNG.runSuitesLocally(TestNG.java:1208)
+at org.testng.TestNG.runSuites(TestNG.java:1112)
+at org.testng.TestNG.run(TestNG.java:1079)
+at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
+at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:293)
+at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:91)
+]]>
+            </full-stacktrace>
+          </exception> <!-- java.lang.AssertionError -->
           <reporter-output>
           </reporter-output>
         </test-method> <!-- Test_createRecipe -->
+        <test-method is-config="true" signature="tearDown()[pri:0, instance:AutomatedScriptOfJaleh01AsPOM.TC_CreateRecipe@ae13544]" started-at="2025-10-09T18:30:17 IST" name="tearDown" finished-at="2025-10-09T18:30:18 IST" duration-ms="867" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- tearDown -->
       </class> <!-- AutomatedScriptOfJaleh01AsPOM.TC_CreateRecipe -->
-      <class name="AutomatedScriptOfJaleh01AsPOM.TC_CreateTemplateMenu">
-        <test-method is-config="true" signature="setup()[pri:0, instance:AutomatedScriptOfJaleh01AsPOM.TC_CreateTemplateMenu@1ebd319f]" started-at="2025-10-08T16:38:48 IST" name="setup" finished-at="2025-10-08T16:38:50 IST" duration-ms="1958" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- setup -->
-        <test-method signature="Test_TemplateMenu(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)[pri:0, instance:AutomatedScriptOfJaleh01AsPOM.TC_CreateTemplateMenu@1ebd319f]" started-at="2025-10-08T16:38:50 IST" name="Test_TemplateMenu" data-provider="recipeDataProvider" finished-at="2025-10-08T16:40:34 IST" duration-ms="103796" status="PASS">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[admin-path15@compass-external.com.au]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[Path@03072024512]]>
-              </value>
-            </param>
-            <param index="2">
-              <value>
-                <![CDATA[Rec98TY]]>
-              </value>
-            </param>
-            <param index="3">
-              <value>
-                <![CDATA[Temp04menu]]>
-              </value>
-            </param>
-            <param index="4">
-              <value>
-                <![CDATA[Production | 180800-AFP Majura | 31-Retail 1(Real)]]>
-              </value>
-            </param>
-            <param index="5">
-              <value>
-                <![CDATA[Template]]>
-              </value>
-            </param>
-            <param index="6">
-              <value>
-                <![CDATA[Day Menu]]>
-              </value>
-            </param>
-            <param index="7">
-              <value>
-                <![CDATA[13.0]]>
-              </value>
-            </param>
-            <param index="8">
-              <value>
-                <![CDATA[Breakfast,Crib]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- Test_TemplateMenu -->
-      </class> <!-- AutomatedScriptOfJaleh01AsPOM.TC_CreateTemplateMenu -->
-      <class name="AutomatedScriptOfJaleh01AsPOM.TC_CreateProductionMenu">
-        <test-method is-config="true" signature="setup()[pri:0, instance:AutomatedScriptOfJaleh01AsPOM.TC_CreateProductionMenu@3c0be339]" started-at="2025-10-08T16:40:35 IST" name="setup" finished-at="2025-10-08T16:40:39 IST" duration-ms="3870" status="PASS">
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- setup -->
-        <test-method signature="Test_ProductionMenu(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)[pri:0, instance:AutomatedScriptOfJaleh01AsPOM.TC_CreateProductionMenu@3c0be339]" started-at="2025-10-08T16:40:39 IST" name="Test_ProductionMenu" data-provider="recipeDataProvider" finished-at="2025-10-08T16:42:26 IST" duration-ms="107252" status="PASS">
-          <params>
-            <param index="0">
-              <value>
-                <![CDATA[admin-path15@compass-external.com.au]]>
-              </value>
-            </param>
-            <param index="1">
-              <value>
-                <![CDATA[Path@03072024512]]>
-              </value>
-            </param>
-            <param index="2">
-              <value>
-                <![CDATA[Rec98TY]]>
-              </value>
-            </param>
-            <param index="3">
-              <value>
-                <![CDATA[Prod02Menu]]>
-              </value>
-            </param>
-            <param index="4">
-              <value>
-                <![CDATA[Production | 180800-AFP Majura | 31-Retail 1(Real)]]>
-              </value>
-            </param>
-            <param index="5">
-              <value>
-                <![CDATA[Production]]>
-              </value>
-            </param>
-            <param index="6">
-              <value>
-                <![CDATA[Day Menu]]>
-              </value>
-            </param>
-            <param index="7">
-              <value>
-                <![CDATA[10/8/25]]>
-              </value>
-            </param>
-            <param index="8">
-              <value>
-                <![CDATA[10/18/25]]>
-              </value>
-            </param>
-          </params>
-          <reporter-output>
-          </reporter-output>
-        </test-method> <!-- Test_ProductionMenu -->
-      </class> <!-- AutomatedScriptOfJaleh01AsPOM.TC_CreateProductionMenu -->
-    </test> <!-- Creation -->
-  </suite> <!-- Suite -->
+    </test> <!-- Default test -->
+  </suite> <!-- Default suite -->
 </testng-results>

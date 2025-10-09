@@ -22,7 +22,7 @@ public class TC_DownloadAllRecipe extends BaseTest2 {
 	@DataProvider(name = "recipeDataProvider")
 	public Object[][] recipeDataProvider() throws IOException {
 		List<Map<String, String>> dataList = readData("E:\\Automation Testing data\\Jaleh\\test1_creation_Master.xlsx",
-				"TC_Create Menu Report");
+				"TC_Create Template Menu");
 		Object[][] data = new Object[dataList.size()][6];
 
 		for (int i = 0; i < dataList.size(); i++) {
@@ -52,20 +52,26 @@ public class TC_DownloadAllRecipe extends BaseTest2 {
 	}
 	
 	
-	public static void FeatureWithorWithoutPrice(String sitename,String productname ,String adminRole,String priceOption) throws Exception {
-		
-		clickHome();
-		addSiteGoRecipe(sitename);
-		selectMenuRecipe();
-		
-		clickHome();
-		clickMenus();
-		clickRecipeMain();
-		clickSearchRecipe();
-		
-		clcikDownloadAllRecipes(adminRole,priceOption);
-		
-}
+	// Method to feature a product with or without price based on given parameters
+	public static void FeatureWithorWithoutPrice(String sitename, String productname, String adminRole, String priceOption) throws Exception {
+	    
+	    clickHome(); // Navigate to the home page
+	    
+	    addSiteGoRecipe(sitename); // Select the site based on the site name
+	    
+	    selectMenuRecipe(); // Open the menu recipe section
+	    
+	    clickHome(); // Go back to the home page
+	    
+	    clickMenus(); // Open the Menus module
+	    
+	    clickRecipeMain(); // Open the main recipe section
+	    
+	    clickSearchRecipe(); // Open the search recipe interface
+	    
+	    clcikDownloadAllRecipes(adminRole, priceOption); // Call method to download all recipes, with parameters controlling admin role and price option
+	}
+
 	
 	
 	

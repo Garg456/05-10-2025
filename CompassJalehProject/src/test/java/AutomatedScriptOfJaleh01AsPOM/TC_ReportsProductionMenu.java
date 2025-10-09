@@ -41,7 +41,7 @@ public class TC_ReportsProductionMenu extends BaseTest2 {
 	@DataProvider(name = "recipeDataProvider")
 	public Object[][] recipeDataProvider() throws IOException {
 		List<Map<String, String>> dataList = readData("E:\\Automation Testing data\\Jaleh\\test1_creation_Master.xlsx",
-				"TC_Create Menu Report");
+				"TC_Create Productio Menu Report");
 		Object[][] data = new Object[dataList.size()][10];
 
 		for (int i = 0; i < dataList.size(); i++) {
@@ -67,6 +67,12 @@ public class TC_ReportsProductionMenu extends BaseTest2 {
 			String ReportEndDate) throws Throwable {
 		// setup();
 		loginToApplication(username, password);
+		if (TestContext.createdProductMenuName != null && !TestContext.createdProductMenuName.isEmpty()) {
+			productname = TestContext.createdProductMenuName;
+	        System.out.println("Overriding recipeName from TC01: " + productname);
+	    } else {
+	        System.out.println("Using recipeName from Excel: " + productname);
+	    }
 		menureport(sitename, productname, adminrole, priceOption, Report_Type, menu_Type, ReportStartDate,
 				ReportEndDate);
 		// tearDown();

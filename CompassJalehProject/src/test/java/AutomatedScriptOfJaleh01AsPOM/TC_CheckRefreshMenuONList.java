@@ -24,10 +24,11 @@ import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.Assert;
 import org.testng.annotations.DataProvider;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
 import com.aventstack.extentreports.ExtentTest;
-
+@Listeners(myListener3.class)
 public class TC_CheckRefreshMenuONList extends BaseTest2 {
 
 	public static String convertAppDateToHtmlDate(String appDate) throws ParseException {
@@ -118,9 +119,9 @@ public class TC_CheckRefreshMenuONList extends BaseTest2 {
 		
 		
 		
-		if (Menu_Type.equalsIgnoreCase("ProductionType")) {
+		if (Menu_Type.equalsIgnoreCase("Production")) {
 		    clickProductionMenus();
-		} else if (Menu_Type.equalsIgnoreCase("TemplateType")) {
+		} else if (Menu_Type.equalsIgnoreCase("Template")) {
 		    clickTemplateMenus();
 		} else if (Menu_Type.equalsIgnoreCase("Draft")) {
 		    clickNewORUnpublishedMenus();

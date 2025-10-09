@@ -98,7 +98,7 @@ public class BaseTest2 {
         driver.findElement(By.xpath("//i[@class='nav-icon fa-brands fa-firstdraft']")).click();
     }
 
-  //  @AfterMethod
+    @AfterMethod
     public void tearDown() {
         if (driver != null) {
             driver.quit();

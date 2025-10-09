@@ -33,7 +33,7 @@ public Object[][] recipeDataProvider() throws IOException {
 		data[i][3] = row.get("sitetype");
 		data[i][4] = row.get("RealSite");
 		data[i][5] = row.get("sector");
-		data[i][6] = row.get("siteName");
+		data[i][6] = row.get("txtsiteName");
 		data[i][7] = row.get("adhocsitelist");
 		data[i][8] = row.get("view");
 		
@@ -47,16 +47,16 @@ public Object[][] recipeDataProvider() throws IOException {
 	return data;
 }
 @Test(dataProvider = "recipeDataProvider")
-public void Test_createSite(String username, String password, String sitename,String sitetype,String RealSite,String sector,String siteName,String adhocsitelist,String view  ) throws Throwable {
+public void Test_createSite(String username, String password, String sitename,String sitetype,String RealSite,String sector,String txtsiteName,String adhocsitelist,String view  ) throws Throwable {
 	// setup();
 	loginToApplication(username, password);
-	createSite(sitename,sitetype,RealSite, sector,siteName, adhocsitelist, view );
+	createSite(sitename,sitetype,RealSite, sector,txtsiteName, adhocsitelist, view );
 	// tearDown();
 	// recipedisplayname,mealtype,cuisine,recipecategory
 }
 
 
-public static void createSite(String sitename,String sitetype,String RealSite,String sector,String siteName,String adhocsitelist,String view ) throws Exception {
+public static void createSite(String sitename,String sitetype,String RealSite,String sector,String txtsiteName,String adhocsitelist,String view ) throws Exception {
 	
 	clickHome();
 	addSiteGoRecipe(sitename);
@@ -75,7 +75,7 @@ public static void createSite(String sitename,String sitetype,String RealSite,St
 	}else {
 	
 	clicksearchsector(sector);
-	clicksiteName(siteName);
+	clicksiteName(txtsiteName);
 	clickAdhocsitelist(adhocsitelist);
 	}
 	clickbrandedView(view);
@@ -83,7 +83,7 @@ public static void createSite(String sitename,String sitetype,String RealSite,St
 	
 		
 		
-	
+	clikcsavebutton();
 	
 	
 	

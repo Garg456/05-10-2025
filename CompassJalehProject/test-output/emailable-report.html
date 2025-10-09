@@ -8,13 +8,46 @@
 <body>
 <table>
 <tr><th>Test</th><th># Passed</th><th># Skipped</th><th># Retried</th><th># Failed</th><th>Time (ms)</th><th>Included Groups</th><th>Excluded Groups</th></tr>
-<tr><th colspan="8">Suite</th></tr>
-<tr><td><a href="#t0">Creation</a></td><td class="num">3</td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num">314,079</td><td></td><td></td></tr>
+<tr><th colspan="8">Default suite</th></tr>
+<tr><td><a href="#t0">Default test</a></td><td class="num">0</td><td class="num">0</td><td class="num">0</td><td class="num attn">1</td><td class="num">69,397</td><td></td><td></td></tr>
 </table>
-<table id='summary'><thead><tr><th>Class</th><th>Method</th><th>Start</th><th>Time (ms)</th></tr></thead><tbody><tr><th colspan="4">Suite</th></tr></tbody><tbody id="t0"><tr><th colspan="4">Creation &#8212; passed</th></tr><tr class="passedeven"><td rowspan="1">AutomatedScriptOfJaleh01AsPOM.TC_CreateProductionMenu</td><td><a href="#m0">Test_ProductionMenu</a></td><td rowspan="1">1759921839614</td><td rowspan="1">107252</td></tr><tr class="passedodd"><td rowspan="1">AutomatedScriptOfJaleh01AsPOM.TC_CreateRecipe</td><td><a href="#m1">Test_createRecipe</a></td><td rowspan="1">1759921642168</td><td rowspan="1">84615</td></tr><tr class="passedeven"><td rowspan="1">AutomatedScriptOfJaleh01AsPOM.TC_CreateTemplateMenu</td><td><a href="#m2">Test_TemplateMenu</a></td><td rowspan="1">1759921730482</td><td rowspan="1">103796</td></tr></tbody>
+<table id='summary'><thead><tr><th>Class</th><th>Method</th><th>Start</th><th>Time (ms)</th></tr></thead><tbody><tr><th colspan="4">Default suite</th></tr></tbody><tbody id="t0"><tr><th colspan="4">Default test &#8212; failed</th></tr><tr class="failedeven"><td rowspan="1">AutomatedScriptOfJaleh01AsPOM.TC_CreateRecipe</td><td><a href="#m0">Test_createRecipe</a></td><td rowspan="1">1760014752308</td><td rowspan="1">64607</td></tr></tbody>
 </table>
-<h2>Creation</h2><h3 id="m0">AutomatedScriptOfJaleh01AsPOM.TC_CreateProductionMenu#Test_ProductionMenu</h3><table class="result"><tr class="param"><th>Parameter #1</th><th>Parameter #2</th><th>Parameter #3</th><th>Parameter #4</th><th>Parameter #5</th><th>Parameter #6</th><th>Parameter #7</th><th>Parameter #8</th><th>Parameter #9</th></tr><tr class="param stripe"><td>admin-path15@compass-external.com.au</td><td>Path@03072024512</td><td>Rec98TY</td><td>Prod02Menu</td><td>Production | 180800-AFP Majura | 31-Retail 1(Real)</td><td>Production</td><td>Day Menu</td><td>10/8/25</td><td>10/18/25</td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
-<h3 id="m1">AutomatedScriptOfJaleh01AsPOM.TC_CreateRecipe#Test_createRecipe</h3><table class="result"><tr class="param"><th>Parameter #1</th><th>Parameter #2</th><th>Parameter #3</th><th>Parameter #4</th><th>Parameter #5</th><th>Parameter #6</th><th>Parameter #7</th><th>Parameter #8</th><th>Parameter #9</th><th>Parameter #10</th></tr><tr class="param stripe"><td>admin-path15@compass-external.com.au</td><td>Path@03072024512</td><td>newRecpe126</td><td>Long Life Full Cream Milk - Superior Foods Darwin NT - 85590</td><td>MILK, FULL CREAM</td><td>_updated101</td><td>Buffet</td><td>Chinese</td><td>Desserts</td><td>Master</td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
-<h3 id="m2">AutomatedScriptOfJaleh01AsPOM.TC_CreateTemplateMenu#Test_TemplateMenu</h3><table class="result"><tr class="param"><th>Parameter #1</th><th>Parameter #2</th><th>Parameter #3</th><th>Parameter #4</th><th>Parameter #5</th><th>Parameter #6</th><th>Parameter #7</th><th>Parameter #8</th><th>Parameter #9</th></tr><tr class="param stripe"><td>admin-path15@compass-external.com.au</td><td>Path@03072024512</td><td>Rec98TY</td><td>Temp04menu</td><td>Production | 180800-AFP Majura | 31-Retail 1(Real)</td><td>Template</td><td>Day Menu</td><td>13.0</td><td>Breakfast,Crib</td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
+<h2>Default test</h2><h3 id="m0">AutomatedScriptOfJaleh01AsPOM.TC_CreateRecipe#Test_createRecipe</h3><table class="result"><tr class="param"><th>Parameter #1</th><th>Parameter #2</th><th>Parameter #3</th><th>Parameter #4</th><th>Parameter #5</th><th>Parameter #6</th><th>Parameter #7</th><th>Parameter #8</th><th>Parameter #9</th><th>Parameter #10</th><th>Parameter #11</th></tr><tr class="param stripe"><td>admin-path15@compass-external.com.au</td><td>Path@03072024512</td><td>newRecpe134</td><td>Long Life Full Cream Milk - Superior Foods Darwin NT - 85590</td><td>MILK, FULL CREAM</td><td>_updated101</td><td>Buffet</td><td>Chinese</td><td>Desserts</td><td>Master</td><td>Production | 180800-AFP Majura | 31-Retail 1(Real)</td></tr><tr><th colspan="11">Exception</th></tr><tr><td colspan="11"><div class="stacktrace">java.lang.AssertionError: ❌ Failed to select product description &apos;Long Life Full Cream Milk - Superior Foods Darwin NT - 85590&apos;: Expected condition failed: waiting for element to be clickable: By.xpath: //li[contains(@class,&apos;select2-results__option&apos;)]//span[contains(text(),&apos;Long Life Full Cream Milk - Superior Foods Darwin NT - 85590&apos;)] (tried for 10 second(s) with 500 milliseconds interval)
+Build info: version: &apos;4.32.0&apos;, revision: &apos;d17c8aa950&apos;
+System info: os.name: &apos;Windows 11&apos;, os.arch: &apos;amd64&apos;, os.version: &apos;10.0&apos;, java.version: &apos;21.0.6&apos;
+Driver info: org.openqa.selenium.chrome.ChromeDriver
+Capabilities {acceptInsecureCerts: false, browserName: chrome, browserVersion: 140.0.7339.185, chrome: {chromedriverVersion: 140.0.7339.207 (17230b545fd..., userDataDir: C:\Users\PRADEE~1.GAR\AppDa...}, fedcm:accounts: true, goog:chromeOptions: {debuggerAddress: localhost:50411}, networkConnectionEnabled: false, pageLoadStrategy: normal, platformName: windows, proxy: Proxy(), se:cdp: ws://localhost:50411/devtoo..., se:cdpVersion: 140.0.7339.185, setWindowRect: true, strictFileInteractability: false, timeouts: {implicit: 0, pageLoad: 300000, script: 30000}, unhandledPromptBehavior: dismiss and notify, webauthn:extension:credBlob: true, webauthn:extension:largeBlob: true, webauthn:extension:minPinLength: true, webauthn:extension:prf: true, webauthn:virtualAuthenticators: true}
+Session ID: 3d696ed92b8a3244c144a66a9220efaf
+	at AutomatedScriptOfJaleh01AsPOM.TC_CreateRecipe.selectProductDescription(TC_CreateRecipe.java:372)
+	at AutomatedScriptOfJaleh01AsPOM.TC_CreateRecipe.createRecipe(TC_CreateRecipe.java:149)
+	at AutomatedScriptOfJaleh01AsPOM.TC_CreateRecipe.Test_createRecipe(TC_CreateRecipe.java:76)
+	at java.base/jdk.internal.reflect.DirectMethodHandleAccessor.invoke(DirectMethodHandleAccessor.java:103)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:580)
+	at org.testng.internal.invokers.MethodInvocationHelper.invokeMethod(MethodInvocationHelper.java:141)
+	at org.testng.internal.invokers.TestInvoker.invokeMethod(TestInvoker.java:687)
+	at org.testng.internal.invokers.TestInvoker.invokeTestMethod(TestInvoker.java:230)
+	at org.testng.internal.invokers.MethodRunner.runInSequence(MethodRunner.java:63)
+	at org.testng.internal.invokers.TestInvoker$MethodInvocationAgent.invoke(TestInvoker.java:995)
+	at org.testng.internal.invokers.TestInvoker.invokeTestMethods(TestInvoker.java:203)
+	at org.testng.internal.invokers.TestMethodWorker.invokeTestMethods(TestMethodWorker.java:154)
+	at org.testng.internal.invokers.TestMethodWorker.run(TestMethodWorker.java:134)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1596)
+	at org.testng.TestRunner.privateRun(TestRunner.java:741)
+	at org.testng.TestRunner.run(TestRunner.java:616)
+	at org.testng.SuiteRunner.runTest(SuiteRunner.java:421)
+	at org.testng.SuiteRunner.runSequentially(SuiteRunner.java:413)
+	at org.testng.SuiteRunner.privateRun(SuiteRunner.java:373)
+	at org.testng.SuiteRunner.run(SuiteRunner.java:312)
+	at org.testng.SuiteRunnerWorker.runSuite(SuiteRunnerWorker.java:52)
+	at org.testng.SuiteRunnerWorker.run(SuiteRunnerWorker.java:95)
+	at org.testng.TestNG.runSuitesSequentially(TestNG.java:1274)
+	at org.testng.TestNG.runSuitesLocally(TestNG.java:1208)
+	at org.testng.TestNG.runSuites(TestNG.java:1112)
+	at org.testng.TestNG.run(TestNG.java:1079)
+	at org.testng.remote.AbstractRemoteTestNG.run(AbstractRemoteTestNG.java:115)
+	at org.testng.remote.RemoteTestNG.initAndRun(RemoteTestNG.java:293)
+	at org.testng.remote.RemoteTestNG.main(RemoteTestNG.java:91)
+</div></td></tr></table><p class="totop"><a href="#summary">back to summary</a></p>
 </body>
 </html>

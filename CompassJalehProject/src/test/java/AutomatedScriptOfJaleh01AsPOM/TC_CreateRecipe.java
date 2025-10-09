@@ -22,11 +22,11 @@ import org.testng.annotations.Test;
 import com.aventstack.extentreports.ExtentTest;
 import com.aventstack.extentreports.MediaEntityBuilder;
 
-import compass.Test.TestContext;
+
 
 @Listeners(myListener3.class)
 public class TC_CreateRecipe extends BaseTest2 {
-	
+
 	ExtentTest testLogger = myListener3.getTest(); // Add a getter method for 'test'
 	/*
 	 * testLogger.info("Navigating to Login Page");
@@ -36,126 +36,144 @@ public class TC_CreateRecipe extends BaseTest2 {
 	@DataProvider(name = "recipeDataProvider") // ✅ Rename here
 
 	public Object[][] recipeDataProvider() throws IOException {
-	    List<Map<String, String>> dataList = readData("E:\\Automation Testing data\\Jaleh\\test1_creation_Master.xlsx", "TC_Create Recipe");
-	    Object[][] data = new Object[dataList.size()][10]; // expects 10 columns
+		List<Map<String, String>> dataList = readData("E:\\Automation Testing data\\Jaleh\\test1_creation_Master.xlsx",
+				"TC_Create Recipe");
+		Object[][] data = new Object[dataList.size()][11]; // expects 10 columns
 
-	    for (int i = 0; i < dataList.size(); i++) {
-	        Map<String, String> row = dataList.get(i);
-	        data[i][0] = row.get("username");
-	        data[i][1] = row.get("password");
-	        data[i][2] = row.get("recipename");
-	        data[i][3] = row.get("productdescription");
-	        data[i][4] = row.get("ingredientgroup");
-	        data[i][5] = row.get("recipedisplayname");
-	        data[i][6] = row.get("mealtype");
-	        data[i][7] = row.get("cuisine");
-	        data[i][8] = row.get("recipecategory");
-	        data[i][9] = row.get("publishType");
-	    }
-	    return data;
+		for (int i = 0; i < dataList.size(); i++) {
+			Map<String, String> row = dataList.get(i);
+			data[i][0] = row.get("username");
+			data[i][1] = row.get("password");
+			data[i][2] = row.get("recipename");
+			data[i][3] = row.get("productdescription");
+			data[i][4] = row.get("ingredientgroup");
+			data[i][5] = row.get("recipedisplayname");
+			data[i][6] = row.get("mealtype");
+			data[i][7] = row.get("cuisine");
+			data[i][8] = row.get("recipecategory");
+			data[i][9] = row.get("publishType");
+			data[i][10] = row.get("sitename");
+			
+			
+		}
+		return data;
 	}
-
-
 
 	@Test(dataProvider = "recipeDataProvider")
-	//@Parameters("recipename")
+	// @Parameters("recipename")
 	public void Test_createRecipe(String username, String password, String recipeName, String productDescription,
-	        String ingredientGroup, String recipedisplayname, String mealtype, String cuisine, String recipecategory, String publishType)
-	        throws Throwable {
+			String ingredientGroup, String recipedisplayname, String mealtype, String cuisine, String recipecategory,
+			String publishType, String sitename) throws Throwable {
 
-	    ExtentTest testLogger = myListener3.getTest(); // ✅ retrieve logger when test actually starts
-	   // testLogger.info("🔰 Starting test for: " + recipeName);
-	    testLogger.info("🔰 Starting test for: <span style='color:green; font-weight:bold;'>" + recipeName + "</span>");
+		ExtentTest testLogger = myListener3.getTest(); // ✅ retrieve logger when test actually starts
+		// testLogger.info("🔰 Starting test for: " + recipeName);
+		testLogger.info("🔰 Starting test for: <span style='color:green; font-weight:bold;'>" + recipeName + "</span>");
+//login in application
 
+		loginToApplication(username, password);
+		testLogger.info("🔐 Logged into application");
 
-	    loginToApplication(username, password);
-	    testLogger.info("🔐 Logged into application");
+		createRecipe(recipeName, productDescription, ingredientGroup, recipecategory, cuisine, mealtype,
+				recipedisplayname, publishType,sitename);
+		// testLogger.pass("✅ Recipe created successfully for: " + recipeName);
+		// testLogger.info("✅ Recipe created successfully for: <span style='color:green;
+		// font-weight:bold;'>" + recipeName + "</span>");
+		testLogger.info("✅ Recipe <span style='color:green; font-weight:bold;'>" + recipeName
+				+ "</span> successfully created as <span style='color:green; font-weight:bold;'>" + publishType
+				+ "</span>");
+		// store recipe name
+		TestContext.createdRecipeName = recipeName;
 
-	    createRecipe(recipeName, productDescription, ingredientGroup, recipecategory, cuisine, mealtype, recipedisplayname, publishType);
-	  //  testLogger.pass("✅ Recipe created successfully for: " + recipeName);
-	    //testLogger.info("✅ Recipe created successfully for: <span style='color:green; font-weight:bold;'>" + recipeName + "</span>");
-	    testLogger.info("✅ Recipe <span style='color:green; font-weight:bold;'>" + recipeName + "</span> successfully created as <span style='color:green; font-weight:bold;'>" + publishType + "</span>");
-	    TestContext.createdRecipeName = recipeName;
 	}
 
+	// Method to create a recipe using all required input fields
+	public void createRecipe(String recipeName, String prdctDcrption, String Ingredientgroup, String recipecategory,
+			String cuisine, String mealtype, String recipedisplayname, String publishType,String sitename) throws Throwable {
 
-	
+		clickHome(); // Navigate to the home page
 
-	public void createRecipe(String recipeName, String prdctDcrption, String Ingredientgroup,String recipecategory, String cuisine,String mealtype,String recipedisplayname, String publishType)
-			throws Throwable {
-		clickHome();
-		addSiteGoRecipe("Production | 208150-South32 - Groote Eylandt | 11-Catering(Real)");
-		clickHome();
-		clickRecipeMain();
+		// Select the correct site before creating the recipe
+		addSiteGoRecipe(sitename);
+
+		clickHome(); // Return to the home page again (likely refreshes UI or reinitializes
+						// dashboard)
+
+		clickRecipeMain(); // Click to open the main recipe module/menu
+
+		// If the recipe is to be saved as a draft, navigate to the draft section
 		if (publishType.equalsIgnoreCase("DRAFT")) {
-		    clickOnNewRecipeDraft();
+			clickOnNewRecipeDraft(); // Open 'New Recipe Draft' section
 		} else {
-		    clickSearchRecipe();
+			clickSearchRecipe(); // Otherwise, go to the standard recipe search section
 		}
 
-		
-		  SearchRecipeBeforeCreation srbc = new SearchRecipeBeforeCreation();
-		  srbc.searchProduct(recipeName);
-		 
-		clickHome();
-		clickRecipeMain();
+		// Search to confirm that recipe doesn't already exist before creating
+		SearchRecipeBeforeCreation srbc = new SearchRecipeBeforeCreation();
+		srbc.searchProduct(recipeName);
 
-		clickOnNewRecipeDraft();
-		
-		clickOnAddRecipe();
+		// Begin recipe creation flow
+		clickHome(); // Go back to home page
+		clickRecipeMain(); // Reopen the recipe section
+
+		clickOnNewRecipeDraft(); // Open draft section where new recipes are usually created
+		clickOnAddRecipe(); // Click the "+" icon to add a new recipe
+
+		// Initialize logger for reporting
 		ExtentTest testLogger = myListener3.getTest();
-		enterRecipeName(recipeName);
-		 testLogger.info("🔰 Enter recipe name: <span style='color:green; font-weight:bold;'>" + recipeName + "</span>");
-		enterRecipeDisplayName(recipedisplayname);// maggie2.0_updated
-		enterRecipeSearchTag("maggie2.0_tag");
-		selectMealType(mealtype);
-		 testLogger.info("🔰 Enter meal type: <span style='color:green; font-weight:bold;'>" + mealtype + "</span>");
-		selectCuisine(cuisine);
-		 testLogger.info("🔰 Enter cuisine: <span style='color:green; font-weight:bold;'>" + cuisine + "</span>");
 
-		selectRecipeCategory(recipecategory);
-		 testLogger.info("🔰 Enter recipecategory: <span style='color:green; font-weight:bold;'>" + recipecategory + "</span>");
+		// Begin filling out the recipe form
 
-		enterPortionSize("half");
-		enterDietaryInfo("ESS OR - PLUS");
-		enterRecipeDescription("item added");
-		enterPortion("1");
-		scrollDown();
-		selectProductDescription(prdctDcrption);
-		 testLogger.info("🔰 Enter prdctDcrption: <span style='color:green; font-weight:bold;'>" + prdctDcrption + "</span>");
+		enterRecipeName(recipeName); // Enter the name of the recipe
+		testLogger.info("🔰 Enter recipe name: <span style='color:green; font-weight:bold;'>" + recipeName + "</span>");
 
-		enterIngredientGroup(Ingredientgroup);
-		
-		 testLogger.info("🔰 Enter Ingredientgroup: <span style='color:green; font-weight:bold;'>" + Ingredientgroup + "</span>");
+		enterRecipeDisplayName(recipedisplayname); // Enter the display name of the recipe
+		enterRecipeSearchTag("maggie2.0_tag"); // Add a custom search tag (static here, can be parameterized)
 
-		// selectProductDescription("Vinegar White 4Lt Edlyn - Superior Food Melbourne -
-		// GWV5");
-		// enterIngredientGroup("VINEGAR, WHITE");
-		clickAddIngredientSymbol();
-		
-		scrollUp();
-		//clickPublishDraft();
-		
+		selectMealType(mealtype); // Select the meal type (e.g., Breakfast, Lunch)
+		testLogger.info("🔰 Enter meal type: <span style='color:green; font-weight:bold;'>" + mealtype + "</span>");
+
+		selectCuisine(cuisine); // Select the cuisine (e.g., Indian, Chinese)
+		testLogger.info("🔰 Enter cuisine: <span style='color:green; font-weight:bold;'>" + cuisine + "</span>");
+
+		selectRecipeCategory(recipecategory); // Select the category of the recipe (e.g., Main course)
+		testLogger.info(
+				"🔰 Enter recipecategory: <span style='color:green; font-weight:bold;'>" + recipecategory + "</span>");
+
+		enterPortionSize("half"); // Enter portion size (static value here)
+		enterDietaryInfo("ESS OR - PLUS"); // Enter dietary information (static value here)
+		enterRecipeDescription("item added"); // Enter description of the recipe
+		enterPortion("1"); // Enter portion value (quantity)
+
+		scrollDown(); // Scroll down to make product description section visible
+
+		selectProductDescription(prdctDcrption); // Select product description (from Excel input)
+		testLogger.info(
+				"🔰 Enter prdctDcrption: <span style='color:green; font-weight:bold;'>" + prdctDcrption + "</span>");
+
+		enterIngredientGroup(Ingredientgroup); // Enter the group of ingredients
+		testLogger.info("🔰 Enter Ingredientgroup: <span style='color:green; font-weight:bold;'>" + Ingredientgroup
+				+ "</span>");
+
+		clickAddIngredientSymbol(); // Click the "+" icon to add the ingredient
+
+		scrollUp(); // Scroll back to the top of the page for publishing
+
+		// Publish the recipe based on type: MASTER, SITE, SECTOR, or DRAFT
 		publishRecipe(publishType);
-		clickHome();
-		clickRecipeMain();
 
+		clickHome(); // Return to home after publishing
+		clickRecipeMain(); // Go back to recipe module to validate
+
+		// Again, navigate to correct section based on publish type
 		if (publishType.equalsIgnoreCase("DRAFT")) {
-		    clickOnNewRecipeDraft();
+			clickOnNewRecipeDraft(); // Go to Draft section
 		} else {
-		    clickSearchRecipe();
+			clickSearchRecipe(); // Go to published recipe search
 		}
-		
-		
 
-		  SearchRecipeAfterCreation srac = new SearchRecipeAfterCreation();
-		  
-		  srac.searchProduct(recipeName);
-		 
-		
-		
-
-
+		// Validate recipe creation by searching after creation
+		SearchRecipeAfterCreation srac = new SearchRecipeAfterCreation();
+		srac.searchProduct(recipeName); // Search for the recipe just created to confirm it's visible
 	}
 
 	// ==================== Reusable Methods ====================
@@ -175,7 +193,7 @@ public class TC_CreateRecipe extends BaseTest2 {
 
 		try {
 			driver.findElement(By.id("RecipeName")).sendKeys(name, Keys.ENTER);
-			
+
 			System.out.println("✅ Recipe name entered: " + name);
 		} catch (Exception e) {
 			throw new AssertionError("❌ Failed to enter recipe name: " + e.getMessage());
@@ -203,90 +221,91 @@ public class TC_CreateRecipe extends BaseTest2 {
 	}
 
 	public void selectMealType(String mealType) {
-	    if (mealType == null || mealType.trim().isEmpty()) {
-	        throw new AssertionError("❌ Meal Type is missing or empty.");
-	    }
-	    try {
-	        driver.findElement(By.id("select2-MealTypeId-container")).click();
-	        driver.findElement(By.xpath("//input[@type='search']")).sendKeys(mealType);
-	        
-	        Thread.sleep(1000);  // wait for dropdown options to load
-	        
-	        List<WebElement> options = driver.findElements(By.xpath("//li[contains(@class,'select2-results__option')]"));
-	        
-	        for (WebElement option : options) {
-	            if (option.getText().equalsIgnoreCase(mealType)) {
-	                option.click();
-	                return;  // success
-	            }
-	        }
-	        
-	        // If code reaches here, option not found
-	        throw new AssertionError("❌ Meal Type '" + mealType + "' not found in dropdown.");
-	        
-	    } catch (InterruptedException e) {
-	        throw new AssertionError("❌ Interrupted Exception: " + e.getMessage());
-	    } catch (Exception e) {
-	        throw new AssertionError("❌ Failed to select Meal Type: " + e.getMessage());
-	    }
-	}
+		if (mealType == null || mealType.trim().isEmpty()) {
+			throw new AssertionError("❌ Meal Type is missing or empty.");
+		}
+		try {
+			driver.findElement(By.id("select2-MealTypeId-container")).click();
+			driver.findElement(By.xpath("//input[@type='search']")).sendKeys(mealType);
 
+			Thread.sleep(1000); // wait for dropdown options to load
+
+			List<WebElement> options = driver
+					.findElements(By.xpath("//li[contains(@class,'select2-results__option')]"));
+
+			for (WebElement option : options) {
+				if (option.getText().equalsIgnoreCase(mealType)) {
+					option.click();
+					return; // success
+				}
+			}
+
+			// If code reaches here, option not found
+			throw new AssertionError("❌ Meal Type '" + mealType + "' not found in dropdown.");
+
+		} catch (InterruptedException e) {
+			throw new AssertionError("❌ Interrupted Exception: " + e.getMessage());
+		} catch (Exception e) {
+			throw new AssertionError("❌ Failed to select Meal Type: " + e.getMessage());
+		}
+	}
 
 	public void selectCuisine(String cuisine) {
-	    if (cuisine == null || cuisine.trim().isEmpty()) {
-	        throw new AssertionError("❌ Cuisine is missing or empty.");
-	    }
-	    try {
-	        driver.findElement(By.id("select2-CuisineId-container")).click();
-	        driver.findElement(By.xpath("//input[@type='search']")).sendKeys(cuisine);
-	        
-	        Thread.sleep(1000);
-	        
-	        List<WebElement> options = driver.findElements(By.xpath("//li[contains(@class,'select2-results__option')]"));
-	        
-	        for (WebElement option : options) {
-	            if (option.getText().equalsIgnoreCase(cuisine)) {
-	                option.click();
-	                return;
-	            }
-	        }
-	        
-	        throw new AssertionError("❌ Cuisine '" + cuisine + "' not found in dropdown.");
-	        
-	    } catch (InterruptedException e) {
-	        throw new AssertionError("❌ Interrupted Exception: " + e.getMessage());
-	    } catch (Exception e) {
-	        throw new AssertionError("❌ Failed to select Cuisine: " + e.getMessage());
-	    }
+		if (cuisine == null || cuisine.trim().isEmpty()) {
+			throw new AssertionError("❌ Cuisine is missing or empty.");
+		}
+		try {
+			driver.findElement(By.id("select2-CuisineId-container")).click();
+			driver.findElement(By.xpath("//input[@type='search']")).sendKeys(cuisine);
+
+			Thread.sleep(1000);
+
+			List<WebElement> options = driver
+					.findElements(By.xpath("//li[contains(@class,'select2-results__option')]"));
+
+			for (WebElement option : options) {
+				if (option.getText().equalsIgnoreCase(cuisine)) {
+					option.click();
+					return;
+				}
+			}
+
+			throw new AssertionError("❌ Cuisine '" + cuisine + "' not found in dropdown.");
+
+		} catch (InterruptedException e) {
+			throw new AssertionError("❌ Interrupted Exception: " + e.getMessage());
+		} catch (Exception e) {
+			throw new AssertionError("❌ Failed to select Cuisine: " + e.getMessage());
+		}
 	}
 
-
 	public void selectRecipeCategory(String category) {
-	    if (category == null || category.trim().isEmpty()) {
-	        throw new AssertionError("❌ Recipe Category is missing or empty.");
-	    }
-	    try {
-	        driver.findElement(By.id("select2-RecipeCategoryId-container")).click();
-	        driver.findElement(By.xpath("//input[@type='search']")).sendKeys(category);
-	        
-	        Thread.sleep(1000);
-	        
-	        List<WebElement> options = driver.findElements(By.xpath("//li[contains(@class,'select2-results__option')]"));
-	        
-	        for (WebElement option : options) {
-	            if (option.getText().equalsIgnoreCase(category)) {
-	                option.click();
-	                return;
-	            }
-	        }
-	        
-	        throw new AssertionError("❌ Recipe Category '" + category + "' not found in dropdown.");
-	        
-	    } catch (InterruptedException e) {
-	        throw new AssertionError("❌ Interrupted Exception: " + e.getMessage());
-	    } catch (Exception e) {
-	        throw new AssertionError("❌ Failed to select Recipe Category: " + e.getMessage());
-	    }
+		if (category == null || category.trim().isEmpty()) {
+			throw new AssertionError("❌ Recipe Category is missing or empty.");
+		}
+		try {
+			driver.findElement(By.id("select2-RecipeCategoryId-container")).click();
+			driver.findElement(By.xpath("//input[@type='search']")).sendKeys(category);
+
+			Thread.sleep(1000);
+
+			List<WebElement> options = driver
+					.findElements(By.xpath("//li[contains(@class,'select2-results__option')]"));
+
+			for (WebElement option : options) {
+				if (option.getText().equalsIgnoreCase(category)) {
+					option.click();
+					return;
+				}
+			}
+
+			throw new AssertionError("❌ Recipe Category '" + category + "' not found in dropdown.");
+
+		} catch (InterruptedException e) {
+			throw new AssertionError("❌ Interrupted Exception: " + e.getMessage());
+		} catch (Exception e) {
+			throw new AssertionError("❌ Failed to select Recipe Category: " + e.getMessage());
+		}
 	}
 
 	public void enterPortionSize(String portionSize) {
@@ -341,12 +360,12 @@ public class TC_CreateRecipe extends BaseTest2 {
 			driver.findElement(By.xpath("//*[@id='select2-desc-container']")).click();
 			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 			wait.until(ExpectedConditions.elementToBeClickable(
-					//changed x path  By.xpath("//li[contains(@class,'select2-results__option') and text()='" + productText + "']")))
-					
-					 By.xpath("//li[contains(@class,'select2-results__option')]//span[contains(text(),'" + productText + "')]")))
+					// changed x path By.xpath("//li[contains(@class,'select2-results__option') and
+					// text()='" + productText + "']")))
 
-			
-			
+					By.xpath("//li[contains(@class,'select2-results__option')]//span[contains(text(),'" + productText
+							+ "')]")))
+
 					.click();
 			System.out.println("✅ Product description selected: " + productText);
 		} catch (Exception e) {
@@ -375,22 +394,22 @@ public class TC_CreateRecipe extends BaseTest2 {
 	}
 
 	public void publishRecipe(String publishTypeFromExcel) throws Throwable {
-		
-		
-		 if (publishTypeFromExcel == null || publishTypeFromExcel.trim().isEmpty()) {
-		        throw new IllegalArgumentException("❌ Publish type is null or empty. Please provide a valid value in the Excel sheet.");
-		
-		 }
-		 ExtentTest testLogger = myListener3.getTest();
-		 String screenshotPath = takeScreenshot("s101");
-         if (screenshotPath != null) {
-             testLogger.pass("First screenshot captured",
-                 MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
-         } else {
-             testLogger.warning("Screenshot failed to capture.");
-         }
-		 
-		 switch (publishTypeFromExcel.trim().toUpperCase()) {
+
+		if (publishTypeFromExcel == null || publishTypeFromExcel.trim().isEmpty()) {
+			throw new IllegalArgumentException(
+					"❌ Publish type is null or empty. Please provide a valid value in the Excel sheet.");
+
+		}
+		ExtentTest testLogger = myListener3.getTest();
+		String screenshotPath = takeScreenshot("s101");
+		if (screenshotPath != null) {
+			testLogger.pass("First screenshot captured",
+					MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+		} else {
+			testLogger.warning("Screenshot failed to capture.");
+		}
+
+		switch (publishTypeFromExcel.trim().toUpperCase()) {
 		case "MASTER":
 			clickPublishMaster();
 			break;
@@ -411,20 +430,21 @@ public class TC_CreateRecipe extends BaseTest2 {
 
 	public void clickPublishDraft() {
 		try {
-			
+
 			Thread.sleep(4000); // Prefer WebDriverWait if the button appears dynamically
 			driver.findElement(By.id("btnSavedraft")).click();
-			//String message = capturePopupMessageText();
-			//System.out.println("Menu add popup: " + message);
-			//test.info(message);
+			// String message = capturePopupMessageText();
+			// System.out.println("Menu add popup: " + message);
+			// test.info(message);
 			ExtentTest testLogger = myListener3.getTest();
-			  String msg = capturePopupMessageText();
-		        System.out.println("Popup after adding recipe: " + msg);
-		        testLogger.info(msg);
-		   	
-		        Assert.assertNotNull(msg, "Customer popup not found.");
-		        Assert.assertTrue(msg.toLowerCase().contains("Recipe") || msg.toLowerCase().contains("success"), "Unexpected customer popup: " + msg);
-					
+			String msg = capturePopupMessageText();
+			System.out.println("Popup after adding recipe: " + msg);
+			testLogger.info(msg);
+
+			Assert.assertNotNull(msg, "Customer popup not found.");
+			Assert.assertTrue(msg.toLowerCase().contains("Recipe") || msg.toLowerCase().contains("success"),
+					"Unexpected customer popup: " + msg);
+
 		} catch (Exception e) {
 			throw new AssertionError("❌ Failed to click 'Save Draft' button: " + e.getMessage());
 		}
@@ -436,20 +456,20 @@ public class TC_CreateRecipe extends BaseTest2 {
 		driver.findElement(By.xpath("//button[text()='Publish to...']")).click();
 		driver.findElement(By.id("btnPublishTosector")).click();
 		// Locator for the OK button
-		  By okButtonLocator = By.xpath("//button[text()='OK']");
+		By okButtonLocator = By.xpath("//button[text()='OK']");
 
-		  // Click the OK button
-		  driver.findElement(okButtonLocator).click();
+		// Click the OK button
+		driver.findElement(okButtonLocator).click();
 
-		  // Wait until the OK button is no longer visible (invisible)
-		  WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-		  wait.until(ExpectedConditions.invisibilityOfElementLocated(okButtonLocator));
+		// Wait until the OK button is no longer visible (invisible)
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(okButtonLocator));
 
-		  System.out.println("'OK' button is now invisible.");
+		System.out.println("'OK' button is now invisible.");
 		System.out.println("✅ Sector published successfully.");
-		 String msg = capturePopupMessageText();
+		String msg = capturePopupMessageText();
 		ExtentTest testLogger = myListener3.getTest();
-		 testLogger.info(msg);
+		testLogger.info(msg);
 	}
 
 	//
@@ -458,47 +478,45 @@ public class TC_CreateRecipe extends BaseTest2 {
 		driver.findElement(By.xpath("//button[text()='Publish to...']")).click();
 		driver.findElement(By.id("btnPublishSiteLib")).click();
 		// Locator for the OK button
-		  By okButtonLocator = By.xpath("//button[text()='OK']");
+		By okButtonLocator = By.xpath("//button[text()='OK']");
 
-		  // Click the OK button
-		  driver.findElement(okButtonLocator).click();
+		// Click the OK button
+		driver.findElement(okButtonLocator).click();
 
-		  // Wait until the OK button is no longer visible (invisible)
-		  WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-		  wait.until(ExpectedConditions.invisibilityOfElementLocated(okButtonLocator));
+		// Wait until the OK button is no longer visible (invisible)
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(okButtonLocator));
 
-		  System.out.println("'OK' button is now invisible.");
+		System.out.println("'OK' button is now invisible.");
 		System.out.println("✅ Site published successfully.");
-		 String msg = capturePopupMessageText();
-			ExtentTest testLogger = myListener3.getTest();
-			 testLogger.info(msg);
+		String msg = capturePopupMessageText();
+		ExtentTest testLogger = myListener3.getTest();
+		testLogger.info(msg);
 	}
 
 	//
-	 public void clickPublishMaster() throws Throwable {
-	    	Thread.sleep(4000); 
-	    	driver.findElement(By.xpath("//button[text()='Publish to...']")).click();
-	   // driver.findElement(By.xpath("//button[text()='Publish to...']")).click();
-		  driver.findElement(By.xpath("//button[text()='Publish as Master']")).click();
+	public void clickPublishMaster() throws Throwable {
+		Thread.sleep(4000);
+		driver.findElement(By.xpath("//button[text()='Publish to...']")).click();
+		// driver.findElement(By.xpath("//button[text()='Publish to...']")).click();
+		driver.findElement(By.xpath("//button[text()='Publish as Master']")).click();
 		// Locator for the OK button
-		  By okButtonLocator = By.xpath("//button[text()='OK']");
+		By okButtonLocator = By.xpath("//button[text()='OK']");
 
-		  // Click the OK button
-		  driver.findElement(okButtonLocator).click();
+		// Click the OK button
+		driver.findElement(okButtonLocator).click();
 
-		  // Wait until the OK button is no longer visible (invisible)
-		  WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-		  wait.until(ExpectedConditions.invisibilityOfElementLocated(okButtonLocator));
+		// Wait until the OK button is no longer visible (invisible)
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		wait.until(ExpectedConditions.invisibilityOfElementLocated(okButtonLocator));
 
-		  System.out.println("'OK' button is now invisible.");
+		System.out.println("'OK' button is now invisible.");
 
-		  System.out.println("✅ Master published successfully.");
-		  String msg = capturePopupMessageText();
-			ExtentTest testLogger = myListener3.getTest();
-			 testLogger.info(msg);
-		  
-		 
-	    
+		System.out.println("✅ Master published successfully.");
+		String msg = capturePopupMessageText();
+		ExtentTest testLogger = myListener3.getTest();
+		testLogger.info(msg);
+
 	}
 
 	public void validationOfCreateRecipe(String recipeName) throws Exception {
@@ -525,22 +543,23 @@ public class TC_CreateRecipe extends BaseTest2 {
 	// Read data from Excel and return a List of Maps
 
 	public static void addSiteGoRecipe(String siteName) throws Exception {
-	    // Enter site name in the search field and press Enter
-	    driver.findElement(By.id("txtSearchOrgUnit")).sendKeys(siteName, Keys.ENTER);
+		// Enter site name in the search field and press Enter
+		driver.findElement(By.id("txtSearchOrgUnit")).sendKeys(siteName, Keys.ENTER);
 
-	    // Build dynamic XPath for the radio button based on the site name
-	    String xpath = "//div[@class='list-field']//label[text()='" + siteName + "']/preceding-sibling::input[@type='radio']";
+		// Build dynamic XPath for the radio button based on the site name
+		String xpath = "//div[@class='list-field']//label[text()='" + siteName
+				+ "']/preceding-sibling::input[@type='radio']";
 
-	    // Locate the radio button
-	    WebElement radioButton = driver.findElement(By.xpath(xpath));
+		// Locate the radio button
+		WebElement radioButton = driver.findElement(By.xpath(xpath));
 
-	    // Click the radio button if it's not already selected
-	    if (!radioButton.isSelected()) {
-	        radioButton.click();
-	        
-	    }
-	    System.out.println("site selected");
-	    Thread.sleep(3000);
-	    driver.findElement(By.id("spnCountRecipes")).click();
+		// Click the radio button if it's not already selected
+		if (!radioButton.isSelected()) {
+			radioButton.click();
+
+		}
+		System.out.println("site selected");
+		Thread.sleep(3000);
+		driver.findElement(By.id("spnCountRecipes")).click();
 	}
 }
