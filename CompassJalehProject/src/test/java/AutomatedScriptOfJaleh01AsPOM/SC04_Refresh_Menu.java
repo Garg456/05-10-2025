@@ -27,6 +27,7 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.MediaEntityBuilder;
 
 public class SC04_Refresh_Menu extends BaseTest2 {
 
@@ -104,12 +105,15 @@ public class SC04_Refresh_Menu extends BaseTest2 {
 		clickHome();
 		navigateToMenus();
 		addmenu(menuname, Menu_Type, MenuCategory, EffectiveStartDate, EffectiveEndDate);
+		
 		addCustomer(NoOfCustomer);
 		//savecutomers();
 		addMealPeriod();
 		selectMealPeriod();
 		addRecipeOnMenu(Recipename);
 		clickPublishMenu();
+		
+		
 		/*
 		 * ExtentTest testLogger = myListener3.getTest();
 		 * 

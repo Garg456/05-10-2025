@@ -30,7 +30,11 @@ public class SearchRecipeBeforeCreation extends BaseTest2 {
          // Enter the recipe name and press ENTER
          srchRecipe.sendKeys(productName, Keys.ENTER);
 
-        String message = driver.findElement(By.xpath("//td[text()='No record found']")).getText();
+         WebElement noRecordElement = wait.until(
+        		    ExpectedConditions.visibilityOfElementLocated(By.xpath("//td[text()='No record found']"))
+        		);
+
+        		String message = noRecordElement.getText();
         Assert.assertEquals(message, "No record found", "Expected 'No record found' message not displayed.");
         System.out.println("Recipe not found as expected.");
     }

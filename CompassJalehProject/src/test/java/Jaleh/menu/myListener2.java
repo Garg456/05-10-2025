@@ -5,10 +5,16 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
+import java.time.Duration;
 import java.util.Date;
 
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 import org.testng.ITestContext;
 import org.testng.ITestListener;
 import org.testng.ITestResult;
@@ -23,21 +29,20 @@ public class myListener2 implements ITestListener {
     public static ExtentReports reports;
     private static ThreadLocal<ExtentTest> test = new ThreadLocal<>();
     private static String reportPath;
-    private static final SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd_HHmmss");
+    String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
 
     @Override
     public void onStart(ITestContext context) {
         String reportDir = System.getProperty("user.dir") + "/report";
         new File(reportDir).mkdirs();
 
-        reportPath = reportDir + "/ExtentReport_" + sdf.format(new Date()) + ".html";
+        reportPath = reportDir + "/ExtentReport_" + timestamp + ".html";
 
         ExtentSparkReporter reporter = new ExtentSparkReporter(reportPath);
         reports = new ExtentReports();
         reports.attachReporter(reporter);
 
         reports.setSystemInfo("Tester", "Jaleh");
-
         System.out.println("Extent report path: " + reportPath);
     }
 
@@ -45,96 +50,134 @@ public class myListener2 implements ITestListener {
     public void onTestStart(ITestResult result) {
         ExtentTest extentTest = reports.createTest(result.getMethod().getMethodName());
         test.set(extentTest);
-        test.get().info("Test started: " + result.getMethod().getMethodName());
     }
 
     @Override
     public void onTestSuccess(ITestResult result) {
-        test.get().pass("Test case passed: " + result.getMethod().getMethodName());
+        ExtentTest extentTest = test.get();
+        WebDriver driver = BaseTest2.driver;
 
-        // Capture popup message if available
+        extentTest.pass("✅ Test case passed: " + result.getMethod().getMethodName());
+
+        if (driver == null) {
+            extentTest.warning("⚠️ WebDriver was null. Screenshot could not be taken on pass.");
+            return;
+        }
+
         try {
-            String popupMessage = BaseTest2.capturePopupMessageText();
-            if (popupMessage != null && !popupMessage.isEmpty()) {
-                test.get().info("Popup Message: " + popupMessage);
-            } else {
-                test.get().info("No popup message found on success.");
-            }
+            // Wait for full page load and stable UI before screenshot
+            waitForPageLoad(driver);
+            waitForBodyVisible(driver);
+            Thread.sleep(500); // small delay to stabilize UI
+
+            String folderPath = System.getProperty("user.dir") + "/screenshots";
+            Files.createDirectories(Paths.get(folderPath));
+
+            String testTimestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+            String screenshotPath = folderPath + "/PASS_" + result.getName() + "_" + testTimestamp + ".png";
+
+            // Take screenshot file
+            File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+            Files.copy(screenshot.toPath(), Paths.get(screenshotPath));
+
+            // Also take Base64 screenshot for embedding
+            String base64Screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BASE64);
+
+            extentTest.pass("✅ Screenshot after test pass:",
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(base64Screenshot).build());
+
+            System.out.println("📸 Screenshot for PASS saved: " + screenshotPath);
         } catch (Exception e) {
-            test.get().warning("Failed to capture popup message on success: " + e.getMessage());
+            extentTest.warning("⚠️ Failed to capture screenshot on pass: " + e.getMessage());
         }
     }
 
     @Override
     public void onTestFailure(ITestResult result) {
-        test.get().fail("Test case failed: " + result.getMethod().getMethodName());
+        ExtentTest extentTest = test.get();
 
-        // Log exception / stacktrace
-        if (result.getThrowable() != null) {
-            test.get().fail(result.getThrowable());
+        if (extentTest == null) {
+            System.err.println("Warning: ExtentTest instance is null in onTestFailure for test: " + result.getMethod().getMethodName());
+            extentTest = reports.createTest(result.getMethod().getMethodName());
+            test.set(extentTest);
         }
 
-        // Capture popup message if available
-        try {
-            String popupMessage = BaseTest2.capturePopupMessageText();
-            if (popupMessage != null && !popupMessage.isEmpty()) {
-                test.get().info("Popup Message: " + popupMessage);
-            } else {
-                test.get().info("No popup message found on failure.");
-            }
-        } catch (Exception e) {
-            test.get().warning("Failed to capture popup message on failure: " + e.getMessage());
+        WebDriver driver = BaseTest2.driver;
+
+        extentTest.fail("❌ Test case failed: " + result.getMethod().getMethodName());
+        extentTest.fail(result.getThrowable());
+
+        if (driver == null) {
+            extentTest.warning("⚠️ WebDriver was null. Screenshot could not be taken on failure.");
+            return;
         }
 
-        // Capture screenshot and attach
         try {
-            if (BaseTest2.driver != null) {
-                String screenshotPath = takeScreenshot(result.getMethod().getMethodName());
-                test.get().addScreenCaptureFromPath(screenshotPath, "Failure Screenshot");
-            }
+            // Wait for full page load and stable UI before screenshot
+            waitForPageLoad(driver);
+            waitForBodyVisible(driver);
+            Thread.sleep(500); // small delay to stabilize UI
+
+            String folderPath = System.getProperty("user.dir") + "/screenshots";
+            Files.createDirectories(Paths.get(folderPath));
+
+            String testTimestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+            String screenshotPath = folderPath + "/FAIL_" + result.getName() + "_" + testTimestamp + ".png";
+
+            // Take screenshot file
+            File screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.FILE);
+            Files.copy(screenshot.toPath(), Paths.get(screenshotPath));
+
+            // Also take Base64 screenshot for embedding
+            String base64Screenshot = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BASE64);
+
+            extentTest.fail("📸 Screenshot of failure:",
+                    MediaEntityBuilder.createScreenCaptureFromBase64String(base64Screenshot).build());
+
+            System.out.println("❌ Screenshot for FAIL saved: " + screenshotPath);
         } catch (Exception e) {
-            test.get().warning("Failed to capture screenshot: " + e.getMessage());
+            extentTest.fail("⚠️ Error capturing screenshot: " + e.getMessage());
         }
     }
 
     @Override
     public void onTestSkipped(ITestResult result) {
-        test.get().skip("Test case skipped: " + result.getMethod().getMethodName());
-
-        // Capture popup message if available
-        try {
-            String popupMessage = BaseTest2.capturePopupMessageText();
-            if (popupMessage != null && !popupMessage.isEmpty()) {
-                test.get().info("Popup Message: " + popupMessage);
-            } else {
-                test.get().info("No popup message found on skip.");
-            }
-        } catch (Exception e) {
-            test.get().warning("Failed to capture popup message on skip: " + e.getMessage());
-        }
+        test.get().skip("⚠️ Test case skipped: " + result.getMethod().getMethodName());
     }
 
     @Override
     public void onFinish(ITestContext context) {
         reports.flush();
-        System.out.println("Extent report generated at: " + reportPath);
+        System.out.println("📄 Extent report generated at: " + reportPath);
     }
 
-    // Utility method to take screenshot and save with timestamp
-    private String takeScreenshot(String methodName) throws IOException {
-        String screenshotsDir = System.getProperty("user.dir") + "/screenshots/";
-        File dir = new File(screenshotsDir);
-        if (!dir.exists()) {
-            dir.mkdirs();
+    public static ExtentTest getTest() {
+        return test.get();
+    }
+
+    // Helper method to wait for page load complete
+    private void waitForPageLoad(WebDriver driver) {
+        try {
+            JavascriptExecutor js = (JavascriptExecutor) driver;
+            for (int i = 0; i < 10; i++) { // try max 10 times with 500ms wait (total 5s)
+                String readyState = js.executeScript("return document.readyState").toString();
+                if ("complete".equals(readyState)) {
+                    break;
+                }
+                Thread.sleep(500);
+            }
+        } catch (InterruptedException e) {
+            // ignore
         }
+    }
 
-        String timestamp = sdf.format(new Date());
-        String screenshotPath = screenshotsDir + methodName + "_" + timestamp + ".png";
-
-        TakesScreenshot ts = (TakesScreenshot) BaseTest2.driver;
-        File src = ts.getScreenshotAs(OutputType.FILE);
-        Files.copy(src.toPath(), Paths.get(screenshotPath));
-
-        return screenshotPath;
+    // Helper method to wait until <body> is visible
+    private void waitForBodyVisible(WebDriver driver) {
+        try {
+            WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+            wait.until(ExpectedConditions.visibilityOfElementLocated(By.tagName("body")));
+        } catch (Exception e) {
+            // ignore if fails
+        }
     }
 }

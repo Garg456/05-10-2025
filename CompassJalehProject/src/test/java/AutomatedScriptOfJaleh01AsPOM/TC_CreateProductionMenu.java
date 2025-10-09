@@ -22,6 +22,8 @@ import org.testng.annotations.Test;
 
 import com.aventstack.extentreports.ExtentTest;
 
+import compass.Test.TestContext;
+
 @Listeners(myListener3.class)
 public class TC_CreateProductionMenu extends BaseTest2 {
 
@@ -70,6 +72,12 @@ public class TC_CreateProductionMenu extends BaseTest2 {
 			String sitename, String Menu_Type, String MenuCategory, String EffectiveStartDate, String EffectiveEndDate)
 			throws Throwable {
 		loginToApplication(username, password);
+		if (TestContext.createdRecipeName != null && !TestContext.createdRecipeName.isEmpty()) {
+	        recipeName = TestContext.createdRecipeName;
+	        System.out.println("Overriding recipeName from TC01: " + recipeName);
+	    } else {
+	        System.out.println("Using recipeName from Excel: " + recipeName);
+	    }
 		ProductionMenu(menuname, sitename, recipeName, Menu_Type, MenuCategory, EffectiveStartDate, EffectiveEndDate);
 	}
 
@@ -84,7 +92,7 @@ public class TC_CreateProductionMenu extends BaseTest2 {
 		clickProductionMenus();
 		SearchRecipeBeforeCreation srbc = new SearchRecipeBeforeCreation();
 		srbc.searchProduct(menuname);
-
+		ExtentTest testLogger = myListener3.getTest();
 		clickHome();
 		navigateToMenus();
 		addmenu(menuname, Menu_Type, MenuCategory, EffectiveStartDate, EffectiveEndDate);
@@ -92,12 +100,13 @@ public class TC_CreateProductionMenu extends BaseTest2 {
 		addMealPeriod();
 		selectMealPeriod();
 		addRecipeOnMenu(Recipename);
-		clickPublishMenu();
-		ExtentTest testLogger = myListener3.getTest();
+		 testLogger.info("🔰 Enter Recipename: <span style='color:green; font-weight:bold;'>" + Recipename + "</span>");
 
-		testLogger
-				.info("🔰 Menu : <span style='color:green; font-weight:bold;'>" + menuname + "</span>" + " created as "
-						+ "🔰 created as : <span style='color:green; font-weight:bold;'>" + MenuCategory + "</span>");
+		clickPublishMenu();
+		
+
+		testLogger.info("🔰 Menu : <span style='color:green; font-weight:bold;'>" + menuname + "</span>" +" created as "+ "🔰 created as Menu_Type : <span style='color:green; font-weight:bold;'>" + Menu_Type +"   MenuCategory  is" +  MenuCategory + "</span>");
+
 
 		clickHome();
 		clickMenus();
@@ -115,14 +124,25 @@ public class TC_CreateProductionMenu extends BaseTest2 {
 
 	public static void addmenu(String menuname, String Menu_Type, String MenuCategory, String EffectiveStartDate,
 			String EffectiveEndDate) throws Exception {
+		
 		driver.findElement(By.xpath("//button[text()='Add Menu']")).click();
 		driver.findElement(By.xpath("//input[@id='MenuName']")).sendKeys(menuname, Keys.ENTER);
+		ExtentTest testLogger = myListener3.getTest();
+		
+		 testLogger.info("🔰 Enter menuname: <span style='color:green; font-weight:bold;'>" + menuname + "</span>");
+
 
 		new Select(driver.findElement(By.id("MenuTypeId"))).selectByVisibleText(Menu_Type);
+		 testLogger.info("🔰 Enter Menu_Type: <span style='color:green; font-weight:bold;'>" + Menu_Type + "</span>");
+
+		
 		new Select(driver.findElement(By.id("MenuCategoryId"))).selectByVisibleText(MenuCategory);
+		 testLogger.info("🔰 Enter MenuCategory: <span style='color:green; font-weight:bold;'>" + MenuCategory + "</span>");
+
 
 		setDateById("EffectiveStartDate", EffectiveStartDate);
 		setDateById("EffectiveEndDate", EffectiveEndDate);
+		 testLogger.info("🔰 Enter date: <span style='color:green; font-weight:bold;'>" + EffectiveStartDate + "  to  " + EffectiveEndDate  + "</span>");
 
 		if (MenuCategory.equals("Cyclic")) {
 

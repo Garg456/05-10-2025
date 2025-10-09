@@ -20,6 +20,9 @@ import org.testng.annotations.Parameters;
 import org.testng.annotations.Test;
 
 import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.MediaEntityBuilder;
+
+import compass.Test.TestContext;
 
 @Listeners(myListener3.class)
 public class TC_CreateRecipe extends BaseTest2 {
@@ -72,7 +75,7 @@ public class TC_CreateRecipe extends BaseTest2 {
 	  //  testLogger.pass("✅ Recipe created successfully for: " + recipeName);
 	    //testLogger.info("✅ Recipe created successfully for: <span style='color:green; font-weight:bold;'>" + recipeName + "</span>");
 	    testLogger.info("✅ Recipe <span style='color:green; font-weight:bold;'>" + recipeName + "</span> successfully created as <span style='color:green; font-weight:bold;'>" + publishType + "</span>");
-
+	    TestContext.createdRecipeName = recipeName;
 	}
 
 
@@ -100,23 +103,36 @@ public class TC_CreateRecipe extends BaseTest2 {
 		clickOnNewRecipeDraft();
 		
 		clickOnAddRecipe();
+		ExtentTest testLogger = myListener3.getTest();
 		enterRecipeName(recipeName);
+		 testLogger.info("🔰 Enter recipe name: <span style='color:green; font-weight:bold;'>" + recipeName + "</span>");
 		enterRecipeDisplayName(recipedisplayname);// maggie2.0_updated
 		enterRecipeSearchTag("maggie2.0_tag");
 		selectMealType(mealtype);
+		 testLogger.info("🔰 Enter meal type: <span style='color:green; font-weight:bold;'>" + mealtype + "</span>");
 		selectCuisine(cuisine);
+		 testLogger.info("🔰 Enter cuisine: <span style='color:green; font-weight:bold;'>" + cuisine + "</span>");
+
 		selectRecipeCategory(recipecategory);
+		 testLogger.info("🔰 Enter recipecategory: <span style='color:green; font-weight:bold;'>" + recipecategory + "</span>");
+
 		enterPortionSize("half");
 		enterDietaryInfo("ESS OR - PLUS");
 		enterRecipeDescription("item added");
 		enterPortion("1");
 		scrollDown();
 		selectProductDescription(prdctDcrption);
+		 testLogger.info("🔰 Enter prdctDcrption: <span style='color:green; font-weight:bold;'>" + prdctDcrption + "</span>");
+
 		enterIngredientGroup(Ingredientgroup);
+		
+		 testLogger.info("🔰 Enter Ingredientgroup: <span style='color:green; font-weight:bold;'>" + Ingredientgroup + "</span>");
+
 		// selectProductDescription("Vinegar White 4Lt Edlyn - Superior Food Melbourne -
 		// GWV5");
 		// enterIngredientGroup("VINEGAR, WHITE");
 		clickAddIngredientSymbol();
+		
 		scrollUp();
 		//clickPublishDraft();
 		
@@ -129,6 +145,8 @@ public class TC_CreateRecipe extends BaseTest2 {
 		} else {
 		    clickSearchRecipe();
 		}
+		
+		
 
 		  SearchRecipeAfterCreation srac = new SearchRecipeAfterCreation();
 		  
@@ -323,7 +341,12 @@ public class TC_CreateRecipe extends BaseTest2 {
 			driver.findElement(By.xpath("//*[@id='select2-desc-container']")).click();
 			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 			wait.until(ExpectedConditions.elementToBeClickable(
-					By.xpath("//li[contains(@class,'select2-results__option') and text()='" + productText + "']")))
+					//changed x path  By.xpath("//li[contains(@class,'select2-results__option') and text()='" + productText + "']")))
+					
+					 By.xpath("//li[contains(@class,'select2-results__option')]//span[contains(text(),'" + productText + "')]")))
+
+			
+			
 					.click();
 			System.out.println("✅ Product description selected: " + productText);
 		} catch (Exception e) {
@@ -352,10 +375,20 @@ public class TC_CreateRecipe extends BaseTest2 {
 	}
 
 	public void publishRecipe(String publishTypeFromExcel) throws Throwable {
+		
+		
 		 if (publishTypeFromExcel == null || publishTypeFromExcel.trim().isEmpty()) {
 		        throw new IllegalArgumentException("❌ Publish type is null or empty. Please provide a valid value in the Excel sheet.");
 		
 		 }
+		 ExtentTest testLogger = myListener3.getTest();
+		 String screenshotPath = takeScreenshot("s101");
+         if (screenshotPath != null) {
+             testLogger.pass("First screenshot captured",
+                 MediaEntityBuilder.createScreenCaptureFromPath(screenshotPath).build());
+         } else {
+             testLogger.warning("Screenshot failed to capture.");
+         }
 		 
 		 switch (publishTypeFromExcel.trim().toUpperCase()) {
 		case "MASTER":
@@ -378,6 +411,7 @@ public class TC_CreateRecipe extends BaseTest2 {
 
 	public void clickPublishDraft() {
 		try {
+			
 			Thread.sleep(4000); // Prefer WebDriverWait if the button appears dynamically
 			driver.findElement(By.id("btnSavedraft")).click();
 			//String message = capturePopupMessageText();

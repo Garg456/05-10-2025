@@ -1,17 +1,79 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<testng-results ignored="0" total="1" passed="1" failed="0" skipped="0">
+<testng-results ignored="0" total="3" passed="3" failed="0" skipped="0">
   <reporter-output>
   </reporter-output>
-  <suite started-at="2025-10-01T16:04:46 IST" name="Default suite" finished-at="2025-10-01T16:05:56 IST" duration-ms="69762">
+  <suite started-at="2025-10-08T16:37:13 IST" name="Suite" finished-at="2025-10-08T16:42:27 IST" duration-ms="314079">
     <groups>
     </groups>
-    <test started-at="2025-10-01T16:04:46 IST" name="Default test" finished-at="2025-10-01T16:05:56 IST" duration-ms="69762">
-      <class name="AutomatedScriptOfJaleh01AsPOM.TC_RefreshMenuONList">
-        <test-method is-config="true" signature="setup()[pri:0, instance:AutomatedScriptOfJaleh01AsPOM.TC_RefreshMenuONList@ae13544]" started-at="2025-10-01T16:04:47 IST" name="setup" finished-at="2025-10-01T16:04:49 IST" duration-ms="2085" status="PASS">
+    <test started-at="2025-10-08T16:37:13 IST" name="Creation" finished-at="2025-10-08T16:42:27 IST" duration-ms="314079">
+      <class name="AutomatedScriptOfJaleh01AsPOM.TC_CreateRecipe">
+        <test-method is-config="true" signature="setup()[pri:0, instance:AutomatedScriptOfJaleh01AsPOM.TC_CreateRecipe@bccb269]" started-at="2025-10-08T16:37:15 IST" name="setup" finished-at="2025-10-08T16:37:22 IST" duration-ms="7116" status="PASS">
           <reporter-output>
           </reporter-output>
         </test-method> <!-- setup -->
-        <test-method signature="Test_RefreshMenuONList(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)[pri:0, instance:AutomatedScriptOfJaleh01AsPOM.TC_RefreshMenuONList@ae13544]" started-at="2025-10-01T16:04:49 IST" name="Test_RefreshMenuONList" data-provider="recipeDataProvider" finished-at="2025-10-01T16:05:56 IST" duration-ms="67002" status="PASS">
+        <test-method signature="Test_createRecipe(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)[pri:0, instance:AutomatedScriptOfJaleh01AsPOM.TC_CreateRecipe@bccb269]" started-at="2025-10-08T16:37:22 IST" name="Test_createRecipe" data-provider="recipeDataProvider" finished-at="2025-10-08T16:38:46 IST" duration-ms="84615" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[admin-path15@compass-external.com.au]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[Path@03072024512]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[newRecpe126]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[Long Life Full Cream Milk - Superior Foods Darwin NT - 85590]]>
+              </value>
+            </param>
+            <param index="4">
+              <value>
+                <![CDATA[MILK, FULL CREAM]]>
+              </value>
+            </param>
+            <param index="5">
+              <value>
+                <![CDATA[_updated101]]>
+              </value>
+            </param>
+            <param index="6">
+              <value>
+                <![CDATA[Buffet]]>
+              </value>
+            </param>
+            <param index="7">
+              <value>
+                <![CDATA[Chinese]]>
+              </value>
+            </param>
+            <param index="8">
+              <value>
+                <![CDATA[Desserts]]>
+              </value>
+            </param>
+            <param index="9">
+              <value>
+                <![CDATA[Master]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- Test_createRecipe -->
+      </class> <!-- AutomatedScriptOfJaleh01AsPOM.TC_CreateRecipe -->
+      <class name="AutomatedScriptOfJaleh01AsPOM.TC_CreateTemplateMenu">
+        <test-method is-config="true" signature="setup()[pri:0, instance:AutomatedScriptOfJaleh01AsPOM.TC_CreateTemplateMenu@1ebd319f]" started-at="2025-10-08T16:38:48 IST" name="setup" finished-at="2025-10-08T16:38:50 IST" duration-ms="1958" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setup -->
+        <test-method signature="Test_TemplateMenu(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)[pri:0, instance:AutomatedScriptOfJaleh01AsPOM.TC_CreateTemplateMenu@1ebd319f]" started-at="2025-10-08T16:38:50 IST" name="Test_TemplateMenu" data-provider="recipeDataProvider" finished-at="2025-10-08T16:40:34 IST" duration-ms="103796" status="PASS">
           <params>
             <param index="0">
               <value>
@@ -30,7 +92,7 @@
             </param>
             <param index="3">
               <value>
-                <![CDATA[newtemp]]>
+                <![CDATA[Temp04menu]]>
               </value>
             </param>
             <param index="4">
@@ -40,7 +102,7 @@
             </param>
             <param index="5">
               <value>
-                <![CDATA[TemplateType]]>
+                <![CDATA[Template]]>
               </value>
             </param>
             <param index="6">
@@ -50,44 +112,76 @@
             </param>
             <param index="7">
               <value>
-                <![CDATA[10/1/25]]>
+                <![CDATA[13.0]]>
               </value>
             </param>
             <param index="8">
               <value>
-                <![CDATA[10/9/25]]>
-              </value>
-            </param>
-            <param index="9">
-              <value>
-                <![CDATA[Production | 208150-South32 - Groote Eylandt | 11-Catering(Real)]]>
-              </value>
-            </param>
-            <param index="10">
-              <value>
-                <![CDATA[With Price]]>
-              </value>
-            </param>
-            <param index="11">
-              <value>
-                <![CDATA[11.0]]>
-              </value>
-            </param>
-            <param index="12">
-              <value>
-                <![CDATA[10/2/25]]>
-              </value>
-            </param>
-            <param index="13">
-              <value>
-                <![CDATA[10/5/25]]>
+                <![CDATA[Breakfast,Crib]]>
               </value>
             </param>
           </params>
           <reporter-output>
           </reporter-output>
-        </test-method> <!-- Test_RefreshMenuONList -->
-      </class> <!-- AutomatedScriptOfJaleh01AsPOM.TC_RefreshMenuONList -->
-    </test> <!-- Default test -->
-  </suite> <!-- Default suite -->
+        </test-method> <!-- Test_TemplateMenu -->
+      </class> <!-- AutomatedScriptOfJaleh01AsPOM.TC_CreateTemplateMenu -->
+      <class name="AutomatedScriptOfJaleh01AsPOM.TC_CreateProductionMenu">
+        <test-method is-config="true" signature="setup()[pri:0, instance:AutomatedScriptOfJaleh01AsPOM.TC_CreateProductionMenu@3c0be339]" started-at="2025-10-08T16:40:35 IST" name="setup" finished-at="2025-10-08T16:40:39 IST" duration-ms="3870" status="PASS">
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- setup -->
+        <test-method signature="Test_ProductionMenu(java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String,java.lang.String)[pri:0, instance:AutomatedScriptOfJaleh01AsPOM.TC_CreateProductionMenu@3c0be339]" started-at="2025-10-08T16:40:39 IST" name="Test_ProductionMenu" data-provider="recipeDataProvider" finished-at="2025-10-08T16:42:26 IST" duration-ms="107252" status="PASS">
+          <params>
+            <param index="0">
+              <value>
+                <![CDATA[admin-path15@compass-external.com.au]]>
+              </value>
+            </param>
+            <param index="1">
+              <value>
+                <![CDATA[Path@03072024512]]>
+              </value>
+            </param>
+            <param index="2">
+              <value>
+                <![CDATA[Rec98TY]]>
+              </value>
+            </param>
+            <param index="3">
+              <value>
+                <![CDATA[Prod02Menu]]>
+              </value>
+            </param>
+            <param index="4">
+              <value>
+                <![CDATA[Production | 180800-AFP Majura | 31-Retail 1(Real)]]>
+              </value>
+            </param>
+            <param index="5">
+              <value>
+                <![CDATA[Production]]>
+              </value>
+            </param>
+            <param index="6">
+              <value>
+                <![CDATA[Day Menu]]>
+              </value>
+            </param>
+            <param index="7">
+              <value>
+                <![CDATA[10/8/25]]>
+              </value>
+            </param>
+            <param index="8">
+              <value>
+                <![CDATA[10/18/25]]>
+              </value>
+            </param>
+          </params>
+          <reporter-output>
+          </reporter-output>
+        </test-method> <!-- Test_ProductionMenu -->
+      </class> <!-- AutomatedScriptOfJaleh01AsPOM.TC_CreateProductionMenu -->
+    </test> <!-- Creation -->
+  </suite> <!-- Suite -->
 </testng-results>

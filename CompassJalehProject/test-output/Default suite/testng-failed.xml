@@ -3,12 +3,12 @@
 <suite name="Failed suite [Default suite]" guice-stage="DEVELOPMENT">
   <test thread-count="5" name="Default test(failed)">
     <classes>
-      <class name="AutomatedScriptOfJaleh01AsPOM.TC_RefreshMenuONList">
+      <class name="AutomatedScriptOfJaleh01AsPOM.TC_ActionOnMenu">
         <methods>
-          <include name="Test_RefreshMenuONList" invocation-numbers="0"/>
+          <include name="Test_ProductionMenu" invocation-numbers="0"/>
           <include name="setup"/>
         </methods>
-      </class> <!-- AutomatedScriptOfJaleh01AsPOM.TC_RefreshMenuONList -->
+      </class> <!-- AutomatedScriptOfJaleh01AsPOM.TC_ActionOnMenu -->
     </classes>
   </test> <!-- Default test(failed) -->
 </suite> <!-- Failed suite [Default suite] -->

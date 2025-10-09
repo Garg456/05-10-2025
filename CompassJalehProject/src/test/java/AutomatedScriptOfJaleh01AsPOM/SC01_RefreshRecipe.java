@@ -15,6 +15,8 @@ import org.testng.annotations.DataProvider;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 
+import com.aventstack.extentreports.ExtentTest;
+
 @Listeners(myListener3.class)
 public class SC01_RefreshRecipe extends BaseTest2 {
 
@@ -47,6 +49,8 @@ public class SC01_RefreshRecipe extends BaseTest2 {
 
     public static void refreshRecipe(String menuname, String sitename2, String sitename1, String Recipename) {
         try {
+        	
+        	ExtentTest testLogger = myListener3.getTest();
             clickHome();
             addSiteGoRecipe(sitename2);
             clickOnMenuRecipe();
@@ -54,6 +58,8 @@ public class SC01_RefreshRecipe extends BaseTest2 {
             clickOnlink(Recipename);
             editRecipeonsite();
             publishRecipeonsite();
+           
+            
 
             clickHome();
             addSiteGoRecipe(sitename1);

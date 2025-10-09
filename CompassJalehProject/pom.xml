@@ -114,7 +114,11 @@
 		    <scope>test</scope>
 		</dependency>
 
-		
+		<dependency>
+			<groupId>PathInfotech</groupId>
+			<artifactId>selenium_practice_part</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
   </dependencies>
   
 </project>

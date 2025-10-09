@@ -20,6 +20,7 @@ import org.testng.annotations.Test;
 
 import com.aventstack.extentreports.ExtentTest;
 
+import compass.Test.TestContext;
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 @Listeners(myListener3.class)
@@ -62,12 +63,28 @@ public class TC_CreateTemplateMenu extends BaseTest2 {
 
 	@Test(dataProvider = "recipeDataProvider")
 	public void Test_TemplateMenu(String username, String password, String recipeName, String menuname, String sitename,
-			String Menu_Type, String MenuCategory, String NoOfCustomer,String addMeal) throws Throwable {
-		// setup();
-		loginToApplication(username, password);
-		TemplateMenu(menuname, sitename, recipeName, Menu_Type, MenuCategory,NoOfCustomer,addMeal);
-		// tearDown();
-		// recipedisplayname,mealtype,cuisine,recipecategory
+	        String Menu_Type, String MenuCategory, String NoOfCustomer,String addMeal) throws Throwable {
+	    
+	    loginToApplication(username, password);
+	    
+	    
+	    if (TestContext.createdRecipeName != null && !TestContext.createdRecipeName.isEmpty()) {
+	        recipeName = TestContext.createdRecipeName;
+	        System.out.println("Overriding recipeName from TC01: " + recipeName);
+	    } else {
+	        System.out.println("Using recipeName from Excel: " + recipeName);
+	    }
+
+		/*
+		 * // Override recipeName if TC01 created recipe exists if
+		  (TestContext.createdRecipeName != null &&
+		 * !TestContext.createdRecipeName.isEmpty()) { recipeName =
+		 * TestContext.createdRecipeName;
+		 * System.out.println("Overriding recipeName from TC01: " + recipeName); } else
+		 * { System.out.println("Using recipeName from Excel: " + recipeName); }
+		 */
+
+	    TemplateMenu(menuname, sitename, recipeName, Menu_Type, MenuCategory, NoOfCustomer, addMeal);
 	}
 
 	public static void TemplateMenu(String menuname, String sitename, String Recipename, String Menu_Type,
@@ -86,17 +103,20 @@ public class TC_CreateTemplateMenu extends BaseTest2 {
 		clickHome();
 		clickMenus();
 		//clickTemplateMenus();
-
+		ExtentTest testLogger = myListener3.getTest();
 		navigateToMenus();
 		addmenu(menuname, Menu_Type, MenuCategory);
 		addCustomer(NoOfCustomer);
+		
 		addMealPeriods(addMeal);
 		selectMealPeriod();
 		addRecipeOnMenu(Recipename);
+		 testLogger.info("🔰 Enter Recipename: <span style='color:green; font-weight:bold;'>" + Recipename + "</span>");
+
 		clickPublishMenu();
-		ExtentTest testLogger = myListener3.getTest();
 		
-		testLogger.info("🔰 Menu : <span style='color:green; font-weight:bold;'>" + menuname + "</span>" +" created as "+ "🔰 created as : <span style='color:green; font-weight:bold;'>" + MenuCategory + "</span>");
+		
+		testLogger.info("🔰 Menu : <span style='color:green; font-weight:bold;'>" + menuname + "</span>" +" created as "+ "🔰 created as Menu_Type : <span style='color:green; font-weight:bold;'>" + Menu_Type +"   MenuCategory  is" +  MenuCategory + "</span>");
 		
 		
 		
@@ -126,6 +146,7 @@ public class TC_CreateTemplateMenu extends BaseTest2 {
 	// click on Addmenu button
 	public static void addmenu(String menuname, String Menu_Type, String MenuCategory) {
 	    // Validate menuname
+		ExtentTest testLogger = myListener3.getTest();
 	    if (menuname == null || menuname.trim().isEmpty()) {
 	        throw new AssertionError("❌ Menu name is missing. Please provide a valid name in the Excel sheet.");
 	    }
@@ -134,6 +155,9 @@ public class TC_CreateTemplateMenu extends BaseTest2 {
 	        driver.findElement(By.xpath("//button[text()='Add Menu']")).click();
 	        System.out.println("Entered :-" + menuname);
 	        driver.findElement(By.xpath("//input[@id='MenuName']")).sendKeys(menuname, Keys.ENTER);
+	        
+			 testLogger.info("🔰 Enter menuname: <span style='color:green; font-weight:bold;'>" + menuname + "</span>");
+
 	    } catch (Exception e) {
 	        throw new AssertionError("❌ Failed to enter menu name: " + e.getMessage());
 	    }
@@ -147,6 +171,9 @@ public class TC_CreateTemplateMenu extends BaseTest2 {
 	        WebElement mntype = driver.findElement(By.id("MenuTypeId"));
 	        Select sl1 = new Select(mntype);
 	        sl1.selectByVisibleText(Menu_Type);
+	        
+			 testLogger.info("🔰 Enter Menu_Type: <span style='color:green; font-weight:bold;'>" + Menu_Type + "</span>");
+
 	    } catch (Exception e) {
 	        throw new AssertionError("❌ Failed to select menu type: " + e.getMessage());
 	    }
@@ -160,6 +187,9 @@ public class TC_CreateTemplateMenu extends BaseTest2 {
 	        WebElement mncatid = driver.findElement(By.id("MenuCategoryId"));
 	        Select sl2 = new Select(mncatid);
 	        sl2.selectByVisibleText(MenuCategory);
+	        
+			 testLogger.info("🔰 Enter MenuCategory: <span style='color:green; font-weight:bold;'>" + MenuCategory + "</span>");
+
 	    } catch (Exception e) {
 	        throw new AssertionError("❌ Failed to select menu category: " + e.getMessage());
 	    }
@@ -331,7 +361,7 @@ public class TC_CreateTemplateMenu extends BaseTest2 {
 	        System.out.println("Popup after adding recipe: " + msg);
 	        testLogger.info(msg);
 	        
-	        Thread.sleep(3000);
+	        Thread.sleep(1000);
 	        
 	        
 	        
