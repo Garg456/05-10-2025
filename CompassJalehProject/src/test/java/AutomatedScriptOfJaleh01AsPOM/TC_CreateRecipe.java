@@ -83,7 +83,7 @@ public class TC_CreateRecipe extends BaseTest2 {
 				+ "</span>");
 		// store recipe name
 		TestContext.createdRecipeName = recipeName;
-
+System.out.println("trcipe name stored");
 	}
 
 	// Method to create a recipe using all required input fields
